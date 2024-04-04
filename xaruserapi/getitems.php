@@ -13,16 +13,17 @@
  */
 /**
  * get the number of changes for a list of items
- * @param $args['modname'] name of the module you want items from, or
- * @param $args['modid'] module id you want items from
- * @param $args['itemtype'] item type of the items (only 1 type supported per call)
- * @param $args['itemids'] array of item IDs
- * @param $args['editor'] optional editor of the changelog entries
- * @param $args['sort'] string sort by itemid (default) or numhits
- * @param $args['numitems'] number of items to return
- * @param $args['startnum'] start at this number (1-based)
- * @returns array
- * @return $array[$itemid] = $changes;
+ * @param array $args
+ * with
+ *     $args['modname'] name of the module you want items from, or
+ *     $args['modid'] module id you want items from
+ *     $args['itemtype'] item type of the items (only 1 type supported per call)
+ *     $args['itemids'] array of item IDs
+ *     $args['editor'] optional editor of the changelog entries
+ *     $args['sort'] string sort by itemid (default) or numhits
+ *     $args['numitems'] number of items to return
+ *     $args['startnum'] start at this number (1-based)
+ * @return array|null $array[$itemid] = $changes;
  */
 function changelog_userapi_getitems($args)
 {

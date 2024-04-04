@@ -45,6 +45,7 @@ class ModuleRemoveObserver extends HookObserver implements ixarHookObserver
         // get args from subject (array containing objectid, extrainfo)
         $args = $subject->getArgs();
         extract($args);
+        //$context = $subject->getContext();
 
         if (!isset($extrainfo)) {
             $extrainfo = [];

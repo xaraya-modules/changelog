@@ -45,6 +45,7 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
     {
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
+        $context = $subject->getContext();
 
         // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
         $modname = $extrainfo['module'];
@@ -57,9 +58,10 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
             'admin',
             'getchanges',
             ['modid' => $modid,
-                'itemtype' => $itemtype,
-                'itemid' => $itemid,
-                'numitems' => 1]
+            'itemtype' => $itemtype,
+            'itemid' => $itemid,
+            'numitems' => 1],
+            $context
         );
         // return empty string here
         if (empty($changes) || !is_array($changes) || count($changes) == 0) {
@@ -91,9 +93,10 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
             'admin',
             'showlog',
             ['modid' => $modid,
-                'itemtype' => $itemtype,
-                'itemid' => $itemid]
+            'itemtype' => $itemtype,
+            'itemid' => $itemid]
         );
+        $data['context'] = $context;
 
         // TODO: use custom template per module + itemtype ?
         return xarTpl::module(

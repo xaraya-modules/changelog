@@ -15,8 +15,7 @@
  * get the list of modules where we're tracking item changes
  *
  * @param $args['editor'] optional editor of the changelog entries
- * @returns array
- * @return $array[$modid][$itemtype] = array('items' => $numitems,'changes' => $numchanges);
+ * @return array|null $array[$modid][$itemtype] = array('items' => $numitems,'changes' => $numchanges);
  */
 function changelog_userapi_getmodules($args)
 {

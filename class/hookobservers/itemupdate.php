@@ -49,6 +49,7 @@ class ItemUpdateObserver extends HookObserver implements ixarHookObserver
     {
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
+        //$context = $subject->getContext();
 
         // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
         $modname = $extrainfo['module'];
