@@ -1,0 +1,97 @@
+{# @changelog/admin/showdiff.html.twig #}
+
+{% block showdiff %}
+<div class="xar-mod-head">
+    <span class="xar-mod-title">{{ xar_translate('Change Log') }}</span>
+</div>
+<div class="xar-mod-body">
+    {{ include('@changelog/includes/admin-menu.html.twig') }}
+    <h2>
+        {{ xar_translate('Version Differences') }}
+    </h2>
+    <h3>
+        {% if itemlink %}
+            <a href="{{ itemlink }}">{{ itemtitle }}&#160;&quot;{{ itemlabel }}&quot;</a>
+        {% endif %}
+
+    </h3>
+    <fieldset>
+        <legend>
+        {{ xar_translate('Difference between version #(1) and #(2) of #(3)', oldversion, newversion, numversions) }}
+        </legend>
+        <div class="xar-form-input-wrapper">
+
+        <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+            <tr>
+                <th>{{ xar_translate('Version') }}</th>
+                <th>{{ xar_translate('Status') }}</th>
+                <th>{{ xar_translate('Editor') }}</th>
+                {% if showhost %}
+                <th>{{ xar_translate('Hostname') }}</th>
+                {% endif %}
+                <th>{{ xar_translate('Date') }}</th>
+                <th>{{ xar_translate('Remark') }}</th>
+            </tr>
+            {% for logid, change in changes %}
+            <tr>
+                <td class="xar-norm">
+                {% if change['link'] %}
+                    <a href="{{ change['link'] }}">{{ change['version'] }}</a>
+                {% else %}
+                    {{ change['version'] }}
+                {% endif %}
+                </td>
+                <td class="xar-norm">{{ change['status'] }}</td>
+                <td class="xar-norm"><a href="{{ change['profile'] }}">{{ change['editorname'] }}</a></td>
+                {% if showhost %}
+                <td class="xar-norm">{{ change['hostname'] }}</td>
+                {% endif %}
+                <td class="xar-norm">
+                    {{ xar_translate('#(1) #(2)', xar_localedate(change['date'], 'medium', ''), xar_localedate(change['date'], '', 'medium')) }}
+                </td>
+                <td class="xar-norm">{{ change['remark'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>
+            <a href="{{ link }}">{{ xar_translate('Back to version listing') }}</a>
+            -
+            {% if prevdiff %}
+            <a href="{{ prevdiff }}">{{ xar_translate('Show previous diff') }}</a>
+            {% endif %}
+            -
+            {% if nextdiff %}
+            <a href="{{ nextdiff }}">{{ xar_translate('Show next diff') }}</a>
+            {% endif %}
+        </p>
+       </div>
+       </fieldset>
+       <fieldset>
+        <legend>
+            {{ xar_translate('Field listing') }}
+         </legend>
+
+        <style>
+            del{background: #FFCCCC;}
+            ins{background: #CCFFCC;}
+        </style>
+
+        <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+            <tr>
+                <th>{{ xar_translate('Fields') }}</th>
+                <th>{{ xar_translate('Value Changes') }}</th>
+            </tr>
+            {% for field, value in fields %}
+            <tr>
+                <td class="xar-norm">{{ field }}</td>
+                <td class="xar-norm">
+                    {% if value['diff'] %}{{  value['diff'] }}{% else %}{{ value['old'] }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        </fieldset>
+
+</div>
+{% endblock %}

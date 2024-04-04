@@ -1,0 +1,93 @@
+{# @changelog/admin/privileges.html.twig #}
+
+{% block privileges %}
+<div class="xar-mod-head"><span class="xar-mod-title">{{ xar_translate('Change Log Administration') }}</span></div>
+<div class="xar-mod-body">
+    {{ include('@changelog/includes/admin-menu.html.twig') }}
+<h2>{{ xar_translate('Select Hooked Modules for Privilege \'#(1)\'', extname) }}</h2>
+<div style="margin: auto;">
+
+<form method="post" action="&xar-modurl-changelog-admin-privileges;">
+    <input type="hidden" name="extpid" id="extpid" value="{{ extpid }}" />
+    <input type="hidden" name="extname" id="extname" value="{{ extname }}" />
+    <input type="hidden" name="extrealm" id="extrealm" value="{{ extrealm }}" />
+    <input type="hidden" name="extmodule" id="extmodule" value="{{ extmodule }}" />
+    <input type="hidden" name="extcomponent" id="extcomponent" value="{{ extcomponent }}" />
+
+<table border="1" cellpadding="8" cellspacing="0">
+<tr><th valign="top" align="right">
+{{ xar_translate('Hooked Module') }}
+</th><td>
+    <select name="moduleid" onchange="submit()">
+        <option value="0">{{ xar_translate('All') }}</option>
+        {% for modid, modname in modlist %}
+            {% if moduleid and moduleid == modid %}
+                <option value="{{ modid }}" selected="selected">{{ modname }}</option>
+            {% else %}
+                <option value="{{ modid }}">{{ modname }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</td></tr>
+
+<tr><th valign="top" align="right">
+{{ xar_translate('Item Type') }}
+</th><td>
+    <input type="text" name="itemtype" id="itemtype" value="{{ itemtype }}" size="10" onchange="submit()" />
+    {# <!-- TODO: show dropdown box for all relevant item types --> #}
+</td></tr>
+
+<tr><th valign="top" align="right">
+{{ xar_translate('Item ID') }}
+</th><td>
+    <input type="text" name="itemid" id="itemid" value="{{ itemid }}" size="10" onchange="submit()" />
+    {# <!-- TODO: show dropdown box for all relevant item ids (if not too many) --> #}
+</td></tr>
+
+<tr><th valign="top" align="right">
+{{ xar_translate('Access Level') }}
+</th><td>
+    <select name="extlevel" id="extlevel">
+        {% if extlevel == 0 %}
+            <option value="0" selected="selected">{{ xar_translate('No Access') }}</option>
+        {% else %}
+            <option value="0">{{ xar_translate('No Access') }}</option>
+        {% endif %}
+        {% if extlevel == 200 %}
+            <option value="200" selected="selected">{{ xar_translate('Read') }}</option>
+        {% else %}
+            <option value="200">{{ xar_translate('Read') }}</option>
+        {% endif %}
+        {% if extlevel == 800 %}
+            <option value="800" selected="selected">{{ xar_translate('Admin') }}</option>
+        {% else %}
+            <option value="800">{{ xar_translate('Admin') }}</option>
+        {% endif %}
+    </select>
+</td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="{{ refreshlabel }}" />
+</td></tr>
+</table>
+
+<br />
+{{ xar_translate('There are #(1) entries matching these selection criteria at the moment', numitems) }}
+<br /><hr /><br />
+(Instance Definition {{ extinstance }})
+<br /><br />
+<input type="submit" name="apply" value="{{ applylabel }}" />
+</form>
+<br />
+
+{{ xar_translate('Some examples :  (assuming your users have read access by default)<br /><br />
+- In order to allow \'Friends\' to view the change logs for articles, define a privilege \'ReadArticleChanges\'
+(or whatever name you prefer), and choose the module "Articles" (instance 151:All:All) and access level "Read" above.
+Press "Finish and Apply to Privilege", and then assign that privilege to the \'Friends\' role.
+<br /><br />
+- ...
+<br /><br />') }}
+
+</div>
+</div>
+{% endblock %}

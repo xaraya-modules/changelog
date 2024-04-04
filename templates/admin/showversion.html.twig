@@ -1,0 +1,148 @@
+{# @changelog/admin/showversion.html.twig #}
+
+{% block showversion %}
+<div class="xar-mod-head">
+    <span class="xar-mod-title">{{ xar_translate('Change Log') }}</span>
+</div>
+<div class="xar-mod-body">
+    {{ include('@changelog/includes/admin-menu.html.twig') }}
+    <h2>
+        {{ xar_translate('Version Details') }}
+    </h2>
+    {% if restore %}
+    <div class="xar-form-input-wrapper">
+        <h3>
+            {{ xar_translate('Restore this version of the module item ?') }}
+        </h3>
+        <form method="post" action="&xar-modurl-changelog-admin-showversion;">
+            <input type="hidden" name="authid" id="authid" value="{{ authid }}" />
+            <input type="hidden" name="modid" id="modid" value="{{ modid }}" />
+            <input type="hidden" name="itemtype" id="itemtype" value="{{ itemtype }}" />
+            <input type="hidden" name="itemid" id="itemid" value="{{ itemid }}" />
+            <input type="hidden" name="logid" id="logid" value="{{ logid }}" />
+            <input type="submit" name="confirm" id="confirm" value="{{ confirmbutton }}"  />
+        </form>
+    </div>
+    {% endif %}
+    <p class="xar-form-input-wrapper-before">
+        {% if itemlink %}
+        <a href="{{ itemlink }}">{{ itemtitle }}&#160;&quot;{{ itemlabel }}&quot;</a>
+        {% endif %}
+    </p>
+    <fieldset>
+        <legend>
+        {{ xar_translate('Version #(1) of #(2)', version, numversions) }}
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+                <tr>
+                    <th>{{ xar_translate('Version') }}</th>
+                    <th>{{ xar_translate('Status') }}</th>
+                    <th>{{ xar_translate('Editor') }}</th>
+                    {% if showhost %}
+                    <th>{{ xar_translate('Hostname') }}</th>
+                    {% endif %}
+                    <th>{{ xar_translate('Date') }}</th>
+                    <th>{{ xar_translate('Remark') }}</th>
+                </tr>
+                <tr>
+                    <td class="xar-norm">{{ version }}</td>
+                    <td class="xar-norm">{{ status }}</td>
+                    <td class="xar-norm"><a href="{{ profile }}">{{ editorname }}</a></td>
+                    {% if showhost %}
+                    <td class="xar-norm">{{ hostname }}</td>
+                    {% endif %}
+                    <td class="xar-norm">
+                        {{ xar_translate('#(1) #(2)', xar_localedate(date, 'medium', ''), xar_localedate(date, '', 'medium')) }}
+                    </td>
+                    <td class="xar-norm">{{ remark }}</td>
+                </tr>
+            </table>
+            <p>
+                <a href="{{ link }}">{{ xar_translate('Back to version listing') }}</a>
+                -
+                {% if prevversion %}
+                <a href="{{ prevversion }}">{{ xar_translate('Show previous version') }}</a>
+                [<a href="{{ prevdiff }}">{{ xar_translate('diff') }}</a>]
+                {% endif %}
+                -
+                {% if nextversion %}
+                <a href="{{ nextversion }}">{{ xar_translate('Show next version') }}</a>
+                [<a href="{{ nextdiff }}">{{ xar_translate('diff') }}</a>]
+                {% endif %}
+                {% if restorelink %}
+                    -
+                    <a href="{{ restorelink }}">{{ xar_translate('Restore current version') }}</a>
+                {% elseif showlink %}
+                    -
+                    <a href="{{ showlink }}">{{ xar_translate('Show current version') }}</a>
+                {% endif %}
+            </p>
+        </div>
+    </fieldset>
+    {% if restore or modname == 'articles' or modname == 'dynamicdata' %}
+    <fieldset>
+        <legend>
+            {{ xar_translate('Preview Version') }}
+        </legend>
+        <div class="xar-form-input-wrapper">
+            {% if fields and modname == 'articles' %}
+                {#  
+                    Hint: we use the articles preview feature of the display function here
+                 #}
+                {{ xar_guifunc("articles", "user", "display", {main: "false", preview: "1", article: fields}) }}
+
+            {% elseif fields and modname == 'dynamicdata' %}
+                {#  
+                    Hint: we retrieve the DD object and then pass the $fields to checkinput(), to update the object values
+                 #}
+                {% set ddobject = xar_apifunc('dynamicdata','user','getobject',{'module_id': modid, 'itemtype': itemtype, 'itemid': itemid}) %}
+                {% set dummy = ddobject.getItem() %}
+                {% set curfields = ddobject.getFieldValues([], 1) %}
+                {% set curfields = curfields|merge(fields) %}
+                {% set dummy = ddobject.checkInput(curfields, 1) %}
+                {{ xar_data_display({object: ddobject}) }}
+
+            {% elseif modname == 'xarpages' %}
+                {#  
+                    TODO: how to re-use some xarpages GUI function ?
+                 #}
+
+            {% else %}
+                {#  
+                    TODO: support other restore modules
+                 #}
+
+            {% endif %}
+        </div>
+    </fieldset>
+    {% endif %}
+
+    <fieldset>
+        <legend>
+           {{ xar_translate('Field List') }}
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+                <tr>
+                    <th>{{ xar_translate('Fields') }}</th>
+                    <th>{{ xar_translate('Values') }}</th>
+                </tr>
+                {% for field, value in fields %}
+                <tr>
+                    <td class="xar-norm">{{ field }}</td>
+                    <td class="xar-norm">
+                        {% if value is iterable or value is object %}
+                            {% set value = value|json_encode(constant('JSON_PRETTY_PRINT')) %}
+                        {% endif %}
+                        {% set value = xar_prep_display(value)|nl2br %}
+                        {{ value }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </fieldset>
+
+</div>
+{% endblock %}

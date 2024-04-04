@@ -1,0 +1,77 @@
+{# @changelog/admin/showlog.html.twig #}
+
+{% block showlog %}
+<div class="xar-mod-head">
+    <span class="xar-mod-title">{{ xar_translate('Change Log') }}</span>
+</div>
+<div class="xar-mod-body">
+    {{ include('@changelog/includes/admin-menu.html.twig') }}
+    <h2>{{ xar_translate('Changelog Version Listing') }}</h2>
+    {% if itemlink %}
+        <h3><a href="{{ itemlink }}">{{ itemtitle }} &#160; &quot;{{ itemlabel }}&quot;</a></h3>
+    {% endif %}
+        <form method="POST" action="&xar-modurl-changelog-admin-showdiff;">
+    <fieldset>
+        <legend>{{ xar_translate('Versions For This Item') }}</legend>
+        <div class="xar-form-input-wrapper">
+            <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+            <tr>
+                <th>{{ xar_translate('Version') }}</th>
+                <th>{{ xar_translate('Status') }}</th>
+                <th>{{ xar_translate('Editor') }}</th>
+                {% if showhost %}
+                <th>{{ xar_translate('Hostname') }}</th>
+                {% endif %}
+                <th>{{ xar_translate('Date') }}</th>
+                <th>{{ xar_translate('Remark') }}</th>
+            </tr>
+            {% for logid, change in changes %}
+            <tr>
+                <td class="xar-norm">
+                    {% if change['link'] %}
+                    <input type="checkbox" name="logids[]" value="{{ logid }}" />
+                        &#160;<a href="{{ change['link'] }}">{{ change['version'] }}</a>
+                    {% else %}
+                        {{ change['version'] }}
+                    {% endif %}
+                </td>
+                <td class="xar-norm">{{ change['status'] }}</td>
+                <td class="xar-norm"><a href="{{ change['profile'] }}">{{ change['editorname'] }}</a></td>
+                {% if showhost %}
+                <td class="xar-norm">{{ change['hostname'] }}</td>
+                {% endif %}
+                <td class="xar-norm">
+                    {{ xar_translate('#(1) #(2)', xar_localedate(change['date'], 'medium', ''), xar_localedate(change['date'], '', 'medium')) }}
+                </td>
+                <td class="xar-norm">{{ change['remark'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+    </fieldset>
+        <p class="xar-form-input-wrapper-before">
+            {% if prevversion %}
+            <a href="{{ prevversion }}">{{ xar_translate('Show first version') }}</a>
+                {% if prevdiff %}
+                [<a href="{{ prevdiff }}">{{ xar_translate('diff') }}</a>]
+                {% endif %}
+            {% endif %}
+            -
+            {% if nextversion %}
+            <a href="{{ nextversion }}">{{ xar_translate('Show last version') }}</a>
+                {% if nextdiff %}
+                [<a href="{{ nextdiff }}">{{ xar_translate('diff') }}</a>]
+                {% endif %}
+            {% endif %}
+        </p>
+
+
+    <div class="xar-form-input-wrapper-before xar-padding-thicktop">
+        <input type="hidden" name="modid" value="{{ modid }}" />
+        <input type="hidden" name="itemtype" value="{{ itemtype }}" />
+        <input type="hidden" name="itemid" value="{{ itemid }}" />
+        <input type="submit" value="{{ xar_translate('Diff') }}" />
+    </div>
+    </form>
+</div>
+{% endblock %}

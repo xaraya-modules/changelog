@@ -1,0 +1,14 @@
+{# @changelog/displayhook.html.twig #}
+
+{% extends '@changelog/base.html.twig' %}
+
+{% block modulespace %}
+{% if showhost %}
+    <a href="{{ link }}">Last modified</a> on {{ xar_localedate(date, 'medium', '') }} {{ xar_localedate(date, '', 'medium') }} by <a href="{{ profile }}">{{ editorname }}</a> [{{ hostname }}]
+    {% if remark %}
+        <div>Remark: {{ remark }}</div>
+    {% endif %}
+{% else %}
+    Last modified on {{ xar_localedate(date, 'medium', '') }} {{ xar_localedate(date, '', 'medium') }} by <a href="{{ profile }}">{{ editorname }}</a>
+{% endif %}
+{% endblock %}

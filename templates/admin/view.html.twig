@@ -1,0 +1,174 @@
+{# @changelog/admin/view.html.twig #}
+
+{% block view %}
+<div class="xar-mod-head"><span class="xar-mod-title">{{ xar_translate('Change Log Administration') }}</span></div>
+<div class="xar-mod-body">
+    {{ include('@changelog/includes/admin-menu.html.twig') }}
+    {% if editor %}
+        {% set editorname = xar_username(editor) %}
+        <h2>{{ xar_translate('View Change Log Items for Editor #(1)', editorname) }}</h2>
+    {% else %}
+        <h2>{{ xar_translate('View Change Log Items') }}</h2>
+    {% endif %}
+
+    {% if not modid %}
+        <div class="xar-fullwidth">
+        <table border="0" width="100%" cellpadding="2" cellspacing="1">
+            <tr>
+                <th class="xar-align-center" valign="center" width="40%">
+                    {{ xar_translate('<strong>Module Name</strong>') }}
+                </th>
+                <th class="xar-align-center"  valign="center" width="15%">
+                    {{ xar_translate('<strong>Module Items</strong>') }}
+                </th>
+                <th class="xar-align-center"  valign="center" width="15%">
+                    {{ xar_translate('<strong>Total Changes</strong>') }}
+                </th>
+                <th class="xar-align-center"  valign="center" width="30%">
+                    {{ xar_translate('<strong>Action</strong>') }}
+                </th>
+            </tr>
+
+
+            {% if not moditems or moditems|length == '0' %}
+                <tr>
+                    <td colspan="4" align="center">
+                        <br />
+                        {{ xar_translate('There are currently no changes in the database...') }}
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            {% else %}
+                {% for moditem in moditems %}
+                    <tr>
+                        <td align="center" valign="center" width="40%">
+                            <a href="{{ moditem['link'] }}">{{ moditem['name'] }}</a>
+                        </td>
+                        <td align="center" valign="center" width="25%">
+                            {{ moditem['numitems'] }}
+                        </td>
+                        <td align="center" valign="center" width="25%">
+                            {{ moditem['numchanges'] }}
+                        </td>
+                        <td align="center" valign="center" width="25%">
+                            <a href="{{ moditem['delete'] }}">{{ xar_translate('Delete') }}</a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                <tr>
+                    <td align="center" valign="center" width="25%">
+                        <strong>{{ xar_translate('Grand Total') }}</strong>
+                    </td>
+                    <td align="center" valign="center" width="15%">
+                        <strong>{{ numitems }}</strong>
+                    </td>
+                    <td align="center" valign="center" width="15%">
+                        <strong>{{ numchanges }}</strong>
+                    </td>
+                    <td align="center" valign="center" width="30%">
+                        <a href="{{ delete }}">{{ xar_translate('Delete All') }}</a>
+                    </td>
+                </tr>
+            {% endif %}
+        </table>
+        </div>
+
+        <div class="xar-form-input-wrapper-before">
+                    {{ xar_translate('Click on <strong>Delete</strong> to delete <strong>all</strong> changes
+                        associated with a module. Click on a <strong>module name</strong> to go to the module\'s statistics page. This page
+                        contains the figures for all of the module\'s items that have changes associated with them.
+                        You can delete all changes associated with a particular item from this page.') }}
+        </div>
+
+{% else %}
+    <h3>{{ xar_translate('Module #(1)', modname) }}</h3>
+
+        <div class="xar-fullwidth">
+        <table border="0" width="100%" cellpadding="2" cellspacing="1">
+            <tr>
+                <th align="center" valign="center" width="50%">
+                    {% if not sortlink['itemid'] %}
+                        {{ xar_translate('<strong>Item Id</strong>') }}
+                    {% else %}
+                        <a href="{{ sortlink['itemid'] }}">{{ xar_translate('<strong>Item Id</strong>') }}</a>
+                    {% endif %}
+                </th>
+                <th align="center" valign="center" width="25%">
+                    {% if not sortlink['numchanges'] %}
+                        {{ xar_translate('<strong>Changes</strong>') }}
+                    {% else %}
+                        <a href="{{ sortlink['numchanges'] }}">{{ xar_translate('<strong>Changes</strong>') }}</a>
+                    {% endif %}
+                </th>
+                <th align="center" valign="center" width="25%">
+                    {{ xar_translate('<strong>Action</strong>') }}
+                </th>
+            </tr>
+
+            {% if not moditems or moditems|length == '0' %}
+                <tr>
+                    <td colspan="3" align="center">
+                        <br />
+                        {{ xar_translate('There are currently no changes attached to this module...') }}
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            {% else %}
+
+                {% for itemid, moditem in moditems %}
+                    <tr>
+                        {% if moditem['title'] and moditem['link'] %}
+                        <td valign="center" width="50%">
+                            {{ itemid }} - <a href="{{ moditem['link'] }}">{{ moditem['title'] }} </a>
+                        </td>
+                        {% else %}
+                        <td align="center" valign="center" width="50%">
+                            {{ itemid }}
+                        </td>
+                        {% endif %}
+                        <td align="center" valign="center" width="25%">
+                            {{ moditem['numchanges'] }}
+                        </td>
+                        <td align="center" valign="center" width="25%">
+                            <a href="{{ moditem['showlog'] }}">{{ xar_translate('View Log') }}</a> |
+                            <a href="{{ moditem['delete'] }}">{{ xar_translate('Delete') }}</a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+               {% if total > itemsperpage %}
+                    <tr>
+                        <td colspan="3" align="center">
+                            {{ xar_pager({startnum: startnum, itemsperpage: itemsperpage, total: total, urltemplate: urltemplate}) }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td align="right" valign="center" width="50%">
+                        <strong>{{ xar_translate('Grand Total') }}</strong>:
+                    </td>
+                    <td align="center" valign="center" width="25%">
+                        <strong>{{ numchanges }}</strong>
+                    </td>
+                    <td align="center" valign="center" width="25%">
+                        <a href="{{ delete }}">{{ xar_translate('Delete All') }}</a>
+                    </td>
+                </tr>
+            {% endif %}
+        </table>
+        </div>
+
+            <div class="xar-form-input-wrapper-before">
+                {{ xar_translate('Click on <strong>View Log</strong> to see all changes associated with a particular
+                    module\'s item. <br />
+                    Click on <strong>Delete</strong> to delete all changes for a module item.<br />
+                    Click on <strong>Item Name</strong> to view the item.') }}
+            </div>
+
+{% endif %}
+
+</div>
+{% endblock %}

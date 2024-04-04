@@ -1,0 +1,39 @@
+{# @changelog/admin/delete.html.twig #}
+
+{% block delete %}
+<div class="xar-mod-head"><span class="xar-mod-title">{{ xar_translate('ChangeLog Administration') }}</span></div>
+<div class="xar-mod-body">
+{{ include('@changelog/includes/admin-menu.html.twig') }}
+{% if editor %}
+    {% set editorname = xar_username(editor) %}
+    <h2>{{ xar_translate('Delete Changes for Editor #(1)', editorname) }}</h2>
+{% else %}
+    <h2>{{ xar_translate('Delete Changes') }}</h2>
+{% endif %}
+    <fieldset>
+        <legend>
+            {{ xar_translate('Delete Confirmation') }}
+        </legend>
+    <div class="xar-form-input-wrapper-before">
+        <p>{{ xar_translate('Are you sure you want to delete all changelog entries') }}
+        {% if not modname %}
+             {{ xar_translate('?') }}
+        {% elseif not itemid %}
+             {{ xar_translate('for module', modname) }}
+        {% else %}
+             {{ xar_translate('for module', modname, itemid) }}
+        {% endif %}</p>
+    </div>
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+    <form method="post" action="&xar-modurl-changelog-admin-delete;">
+        <input type="hidden" name="authid" id="authid" value="{{ authid }}" />
+        <input type="hidden" name="modid" id="modid" value="{{ modid }}" />
+        <input type="hidden" name="itemtype" id="itemtype" value="{{ itemtype }}" />
+        <input type="hidden" name="itemid" id="itemid" value="{{ itemid }}" />
+        <input type="hidden" name="editor" id="editor" value="{{ editor }}" />
+        <input type="submit" name="confirm" id="confirm" value="{{ confirmbutton }}"  />
+    </form>
+    </div>
+</div>
+{% endblock %}

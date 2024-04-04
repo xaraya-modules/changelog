@@ -1,0 +1,21 @@
+{# @changelog/admin/hooks.html.twig #}
+
+{% block hooks %}
+<div class="xar-mod-head">
+        <span class="xar-mod-title">
+            
+                Changelog Administration
+            
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        {{ include('@changelog/includes/admin-menu.html.twig') }}
+        <fieldset>
+            <legend>
+                Configure Changelog Hooks
+            </legend>
+            {% set url = xar_moduleurl('changelog','admin','hooks') %}
+            {{ xar_guifunc("modules", "admin", "hooks", {main: "false", curhook: "changelog", return_url: url}) }}
+        </fieldset>
+    </div>
+{% endblock %}

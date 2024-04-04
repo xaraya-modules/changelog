@@ -1,0 +1,13 @@
+{# @changelog/admin/modifyhook.html.twig #}
+
+{% block modifyhook %}
+<div class="xar-form-input-wrapper">
+        <label for="changelog" class="xar-form-label" title="{{ xar_translate('Select Enter changelog comment') }}">
+            {% if link %}
+                 <a href="{{ link }}">{{ xar_translate('Change Log') }}</a>
+            {% else %}
+                {{ xar_translate('Change Log') }}
+            {% endif %}
+        </label>
+        <input type="text" name="changelog_remark" value="{{ remark }}" size="40" />
+    </div>{% endblock %}

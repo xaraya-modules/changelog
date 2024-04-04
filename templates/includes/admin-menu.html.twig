@@ -1,0 +1,52 @@
+{# @changelog/includes/admin-menu.html.twig #}
+
+{% block admin_menu %}
+{#   License: GPL http://www.gnu.org/copyleft/gpl.html  #}
+{#  Common Administration menu #}
+{{ xar_style({scope: "module", module: "base", file: "navtabs"}) }}
+
+{% set activetab = _bl_module_func %}
+{#  We hide the whole menu here unless there are admin rights
+    As those with view privs can see the changelog per item view #}
+{% if xar_security_check('AdminChangeLog') %}
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      {{ xar_translate('Actions:') }}
+    </dt>
+
+        {% if activetab == 'view' or activetab == 'delete' or activetab == 'modify'
+                or activetab == 'showversion' or activetab == 'showdiff' or activetab == 'showlog' %}
+            {% set tabclass = 'active' %}
+        {% else %}
+            {% set tabclass = '' %}
+        {% endif %}
+        <dd class="{{ tabclass }}">
+          <a href="&xar-modurl-changelog-admin-view;">
+            {{ xar_translate('Manage Changelog Entries') }}
+          </a>
+        </dd>
+
+        {% set tabclass = activetab=='hooks'?'active'.'' %}
+        <dd class="{{ tabclass }}">
+          <a href="&xar-modurl-changelog-admin-hooks;">
+            {{ xar_translate('Hooks') }}
+          </a>
+        </dd>
+
+        {% set tabclass = activetab=='modifyconfig'?'active'.'' %}
+        <dd class="{{ tabclass }}">
+          <a href="&xar-modurl-changelog-admin-modifyconfig;">
+            {{ xar_translate('Modify Config') }}
+          </a>
+        </dd>
+
+    {% set tabclass = activetab=='main'?'active'.'' %}
+    <dd class="{{ tabclass }}">
+      <a href="&xar-modurl-changelog-admin-overview;">
+        {{ xar_translate('Overview') }}
+      </a>
+    </dd>
+  </dl>
+</div>
+    {% endif %}{% endblock %}

@@ -1,0 +1,46 @@
+{# @changelog/admin/main.html.twig #}
+
+{% block main %}
+{#   License: GPL http://www.gnu.org/copyleft/gpl.html  #}
+<div class="xar-mod-head"><span class="xar-mod-title">{{ xar_translate('Changelog Administration') }}</span></div>
+<div class="xar-mod-body">
+    {{ include('@changelog/includes/admin-menu.html.twig') }}
+
+    <img src="{{ xar_imageurl('module-generic.png','base') }}" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+    <h2>{{ xar_translate('Overview') }}</h2>
+
+    <h2>{{ xar_translate('What is it?') }}</h2>
+        <p><em>{{ xar_translate('ChangeLog is a Xaraya Utility Module.') }}</em>
+        {{ xar_translate('that allows you to keep track of changes in module items.') }}</p>
+    <h3>{{ xar_translate('How to use it?') }}</h3>
+         <p>{{ xar_translate('For each hooked module, specify the fields you want to keep track of - someday, perhaps... :-)') }}</p>
+    <h3>{{ xar_translate('Included Blocks') }}</h3>
+           <p>{{ xar_translate('There are no included blocks at this time') }}</p>
+
+    <h3>{{ xar_translate('Included Hooks') }}</h3>
+        <p>
+            <ul>
+                <li>{{ xar_translate('create/modify/update/delete -- Allows you to create/update change logs') }}</li>
+                <li>{{ xar_translate('display -- Allows you to display change logs') }}</li>
+            </ul>
+        </p>
+
+    <h3>
+        {{ xar_translate('Further Information') }}
+    </h3>
+    <p>
+        {{ xar_translate('Further information on the Changelog module can be found at') }}
+    </p>
+    <ul>
+        <li>{{ xar_translate('Changelog Extension page at') }} <a title="{{ xar_translate('Changelog Module - Xaraya Extension 185') }}" href="http://www.xaraya.com/index.php/release/185.html">Xaraya Extension and Releases</a>.
+            {{ xar_translate('Click on Version History tab at the bottom to get the latest release information.') }}
+        </li>
+        <li>{{ xar_translate('Related tutorials and documentation on Changelog found at') }} <a href="http://www.xaraya.com/index.php/keywords/changelog/" title="{{ xar_translate('Related documentation on Changelog') }}">{{ xar_translate('Xaraya Documentation.') }}</a>
+        </li>
+     </ul>
+  <p class="xar-sub">
+    <strong>&#160;{{ xar_translate('Changelog Module Overview') }}</strong><br />&#160;{{ xar_translate('Version') }} 1.0.0&#160; 2006-04-09
+  </p>
+</div>
+{% endblock %}

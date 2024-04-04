@@ -1,0 +1,55 @@
+{# @changelog/admin/modifyconfig.html.twig #}
+
+{% block modifyconfig %}
+<div class="xar-mod-head"><span class="xar-mod-title">{{ xar_translate('ChangeLog Administration') }}</span></div>
+<div class="xar-mod-body">
+    {{ include('@changelog/includes/admin-menu.html.twig') }}
+    <h2>{{ xar_translate('Modify Configuration') }}</h2>
+
+    <form method="post" action="&xar-modurl-changelog-admin-updateconfig;" enctype="application/x-www-form-urlencoded" >
+    <fieldset>
+        <legend>
+            {{ xar_translate('Configuration Options') }}
+        </legend>
+
+    <div class="xar-form-input-wrapper">
+            <label for="numstats" class="xar-form-label">{{ xar_translate('Items per page in lists') }}:</label>
+            <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="{{ numstats }}" />
+    </div>
+    <div class="xar-form-input-wrapper-after">
+           {% if showtitle %}
+                  <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
+                {% else %}
+                  <input type="checkbox" name="showtitle" id="showtitle" value="1" />
+                {% endif %}
+            <label for="showtitle">{{ xar_translate('Show the item title in lists?') }}</label>
+    </div>
+    {% for modname, config in settings %}
+        <p class="xar-form-input-wrapper-before xar-padding-medium">
+            <strong>{{ config['label'] }}</strong>
+        </p>
+        <div class="xar-form-input-wrapper">
+            <label for="changelog_{{ modname }}" class="xar-form-label">{{ xar_translate('Fields to monitor:') }}</label>
+            <input type="text" name="changelog[{{ modname }}]" id="changelog_{{ modname }}" value="{{ config['changelog'] }}" size="40" />
+            {{ xar_translate('(comma-separated list)') }}
+        </div>
+        {% if config['includedd'] %}
+            <div class="xar-form-input-wrapper">
+            <label for="includedd_{{ modname }}" class="xar-form-label">{{ xar_translate('Include DD fields:') }}</label>
+            {% if config['includedd'] > 1 %}
+                <input type="checkbox" name="includedd[{{ modname }}]" id="includedd_{{ modname }}" value="1" checked="checked" />
+            {% else %}
+                <input type="checkbox" name="includedd[{{ modname }}]" id="includedd_{{ modname }}" value="1" />
+            {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="{{ authid }}" />
+        <input type="submit" value="{{ xar_translate('Update Change Log Configuration') }}" />
+    </div>
+</form>
+
+</div>
+{% endblock %}
