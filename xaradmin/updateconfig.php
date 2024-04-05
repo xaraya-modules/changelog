@@ -14,7 +14,7 @@
 /**
  * Update configuration
  */
-function changelog_admin_updateconfig()
+function changelog_admin_updateconfig(array $args = [], $context = null)
 {
     // Get parameters
     if (!xarVar::fetch('changelog', 'isset', $changelog, null, xarVar::NOT_REQUIRED)) {
@@ -72,7 +72,7 @@ function changelog_admin_updateconfig()
     xarModVars::set('changelog', 'numstats', $numstats);
     xarModVars::set('changelog', 'showtitle', $showtitle);
 
-    xarResponse::Redirect(xarController::URL('changelog', 'admin', 'modifyconfig'));
+    xarController::redirect(xarController::URL('changelog', 'admin', 'modifyconfig'), null, $context);
 
     return true;
 }

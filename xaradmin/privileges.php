@@ -14,7 +14,7 @@
 /**
  * Manage definition of instances for privileges (unfinished)
  */
-function changelog_admin_privileges($args)
+function changelog_admin_privileges(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('AdminChangeLog')) {
@@ -118,12 +118,12 @@ function changelog_admin_privileges($args)
         }
 
         // redirect to the privilege
-        xarResponse::Redirect(xarController::URL(
+        xarController::redirect(xarController::URL(
             'privileges',
             'admin',
             'modifyprivilege',
             ['pid' => $pid]
-        ));
+        ), null, $context);
         return true;
     }
 

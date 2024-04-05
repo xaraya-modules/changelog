@@ -17,7 +17,7 @@
  * @author mikespub
  * @return array containing the menulinks for the main menu items.
  */
-function changelog_adminapi_getmenulinks()
+function changelog_adminapi_getmenulinks(array $args = [], $context = null)
 {
     $menulinks = [];
     // Security Check

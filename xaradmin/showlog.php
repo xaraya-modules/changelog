@@ -3,7 +3,7 @@
 /**
  * show the change log for a module item
  */
-function changelog_admin_showlog($args)
+function changelog_admin_showlog(array $args = [], $context = null)
 {
     extract($args);
 
@@ -96,7 +96,7 @@ function changelog_admin_showlog($args)
                 ['modid' => $modid,
                       'itemtype' => $itemtype,
                       'itemid' => $itemid,
-                      'logids' => $firstid.'-'.$previd]
+                      'logids' => $firstid . '-' . $previd]
             );
         }
     }
@@ -120,7 +120,7 @@ function changelog_admin_showlog($args)
                 ['modid' => $modid,
                       'itemtype' => $itemtype,
                       'itemid' => $itemid,
-                      'logids' => $nextid.'-'.$lastid]
+                      'logids' => $nextid . '-' . $lastid]
             );
         }
     }
@@ -129,14 +129,17 @@ function changelog_admin_showlog($args)
     if (empty($modinfo['name'])) {
         return $data;
     }
-    $itemlinks = xarMod::apiFunc(
-        $modinfo['name'],
-        'user',
-        'getitemlinks',
-        ['itemtype' => $itemtype,
-              'itemids' => [$itemid]],
-        0
-    );
+    try {
+        $itemlinks = xarMod::apiFunc(
+            $modinfo['name'],
+            'user',
+            'getitemlinks',
+            ['itemtype' => $itemtype,
+            'itemids' => [$itemid]]
+        );
+    } catch (Exception $e) {
+        $itemlinks = [];
+    }
     if (isset($itemlinks[$itemid])) {
         $data['itemlink'] = $itemlinks[$itemid]['url'];
         $data['itemtitle'] = $itemlinks[$itemid]['title'];

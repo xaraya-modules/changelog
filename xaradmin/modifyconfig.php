@@ -16,12 +16,9 @@
  *
  * @author mikespub
  * @access public
- * @param no $ parameters
- * @return true on success or void on failure
- * @throws no exceptions
- * @todo nothing
+ * @return array|true|void on success or void on failure
  */
-function changelog_admin_modifyconfig()
+function changelog_admin_modifyconfig(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('AdminChangeLog')) {
@@ -52,14 +49,11 @@ function changelog_admin_modifyconfig()
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarMod::apiFunc(
-                    $modname,
-                    'user',
-                    'getitemtypes',
-                    // don't throw an exception if this function doesn't exist
-                    [],
-                    0
-                );
+                try {
+                    $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes');
+                } catch (Exception $e) {
+                    $mytypes = [];
+                }
                 foreach ($value as $itemtype => $val) {
                     $changelog = xarModVars::get('changelog', "$modname.$itemtype");
                     if (empty($changelog)) {

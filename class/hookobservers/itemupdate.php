@@ -85,7 +85,7 @@ class ItemUpdateObserver extends HookObserver implements ixarHookObserver
             }
         }
         if (!empty($itemtype)) {
-            $getlist = xarModVars::get('changelog', $modname.'.'.$itemtype);
+            $getlist = xarModVars::get('changelog', $modname . '.' . $itemtype);
         }
         if (!isset($getlist)) {
             $getlist = xarModVars::get('changelog', $modname);

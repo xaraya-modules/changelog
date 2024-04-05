@@ -18,10 +18,9 @@
  * @param $args['itemtype'] item type
  * @param $args['itemid'] item id
  * @param $args['logid'] log id
- * @return array of changes
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return array|void of changes
  */
-function changelog_adminapi_getversion($args)
+function changelog_adminapi_getversion(array $args = [], $context = null)
 {
     extract($args);
 

@@ -19,10 +19,9 @@
  * @param $args['itemtype'] optional item type for the item
  * @param $args['itemid'] int item id
  * @param $args['editor'] optional editor of the changelog entries
- * @return bool true on success, false on failure
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool|void true on success, false on failure
  */
-function changelog_adminapi_delete($args)
+function changelog_adminapi_delete(array $args = [], $context = null)
 {
     extract($args);
 

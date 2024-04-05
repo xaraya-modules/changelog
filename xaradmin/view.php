@@ -14,7 +14,7 @@
 /**
  * View changelog entries
  */
-function changelog_admin_view()
+function changelog_admin_view(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('AdminChangeLog')) {
@@ -61,14 +61,11 @@ function changelog_admin_view()
         foreach ($modlist as $modid => $itemtypes) {
             $modinfo = xarMod::getInfo($modid);
             // Get the list of all item types for this module (if any)
-            $mytypes = xarMod::apiFunc(
-                $modinfo['name'],
-                'user',
-                'getitemtypes',
-                // don't throw an exception if this function doesn't exist
-                [],
-                0
-            );
+            try {
+                $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes');
+            } catch (Exception $e) {
+                $mytypes = [];
+            }
             foreach ($itemtypes as $itemtype => $stats) {
                 $moditem = [];
                 $moditem['numitems'] = $stats['items'];
@@ -122,14 +119,11 @@ function changelog_admin_view()
             }
         } else {
             // Get the list of all item types for this module (if any)
-            $mytypes = xarMod::apiFunc(
-                $modinfo['name'],
-                'user',
-                'getitemtypes',
-                // don't throw an exception if this function doesn't exist
-                [],
-                0
-            );
+            try {
+                $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes');
+            } catch (Exception $e) {
+                $mytypes = [];
+            }
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                 $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                 //    $data['modlink'] = $mytypes[$itemtype]['url'];
@@ -182,14 +176,17 @@ function changelog_admin_view()
         $showtitle = xarModVars::get('changelog', 'showtitle');
         if (!empty($showtitle)) {
             $itemids = array_keys($getitems);
-            $itemlinks = xarMod::apiFunc(
-                $modinfo['name'],
-                'user',
-                'getitemlinks',
-                ['itemtype' => $itemtype,
-                      'itemids' => $itemids],
-                0
-            ); // don't throw an exception here
+            try {
+                $itemlinks = xarMod::apiFunc(
+                    $modinfo['name'],
+                    'user',
+                    'getitemlinks',
+                    ['itemtype' => $itemtype,
+                    'itemids' => $itemids]
+                );
+            } catch (Exception $e) {
+                $itemlinks = [];
+            }
         } else {
             $itemlinks = [];
         }

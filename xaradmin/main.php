@@ -17,18 +17,16 @@
  *
  * @author mikespub
  * @access public
- * @param no $ parameters
  * @return bool true on success of redirect or void on failure
- * @throws XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION'
  */
-function changelog_admin_main()
+function changelog_admin_main(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('AdminChangeLog')) {
         return;
     }
 
-    xarResponse::Redirect(xarController::URL('changelog', 'admin', 'view'));
+    xarController::redirect(xarController::URL('changelog', 'admin', 'view'), null, $context);
     // success
-    return []; //true;
+    return true;
 }

@@ -14,7 +14,7 @@
 /**
  * Delete changelog entries of module items
  */
-function changelog_admin_delete()
+function changelog_admin_delete(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('AdminChangeLog')) {
@@ -52,14 +52,11 @@ function changelog_admin_delete()
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarMod::apiFunc(
-                    $modinfo['name'],
-                    'user',
-                    'getitemtypes',
-                    // don't throw an exception if this function doesn't exist
-                    [],
-                    0
-                );
+                try {
+                    $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes');
+                } catch (Exception $e) {
+                    $mytypes = [];
+                }
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                     $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                 } else {
@@ -93,6 +90,6 @@ function changelog_admin_delete()
     )) {
         return;
     }
-    xarResponse::Redirect(xarController::URL('changelog', 'admin', 'view'));
+    xarController::redirect(xarController::URL('changelog', 'admin', 'view'), null, $context);
     return true;
 }

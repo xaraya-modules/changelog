@@ -17,7 +17,7 @@
  * @param $args['editor'] optional editor of the changelog entries
  * @return array|null $array[$modid][$itemtype] = array('items' => $numitems,'changes' => $numchanges);
  */
-function changelog_userapi_getmodules($args)
+function changelog_userapi_getmodules(array $args = [], $context = null)
 {
     extract($args);
 
@@ -37,7 +37,7 @@ function changelog_userapi_getmodules($args)
                 FROM $changelogtable
                 WHERE xar_editor = ?
                 GROUP BY xar_moduleid, xar_itemtype";
-        $result = $dbconn->Execute($query, [(int)$editor]);
+        $result = $dbconn->Execute($query, [(int) $editor]);
     } else {
         $query = "SELECT xar_moduleid, xar_itemtype, COUNT(DISTINCT xar_itemid), COUNT(*)
                 FROM $changelogtable

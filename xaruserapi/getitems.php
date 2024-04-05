@@ -25,7 +25,7 @@
  *     $args['startnum'] start at this number (1-based)
  * @return array|null $array[$itemid] = $changes;
  */
-function changelog_userapi_getitems($args)
+function changelog_userapi_getitems(array $args = [], $context = null)
 {
     // Get arguments from argument array
     extract($args);

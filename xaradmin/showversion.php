@@ -14,7 +14,7 @@
 /**
  * show a particular version of a module item (or restore it if possible)
  */
-function changelog_admin_showversion($args)
+function changelog_admin_showversion(array $args = [], $context = null)
 {
     extract($args);
 
@@ -116,14 +116,17 @@ function changelog_admin_showversion($args)
         return;
     }
 
-    $itemlinks = xarMod::apiFunc(
-        $modinfo['name'],
-        'user',
-        'getitemlinks',
-        ['itemtype' => $itemtype,
-              'itemids' => [$itemid]],
-        0
-    );
+    try {
+        $itemlinks = xarMod::apiFunc(
+            $modinfo['name'],
+            'user',
+            'getitemlinks',
+            ['itemtype' => $itemtype,
+            'itemids' => [$itemid]]
+        );
+    } catch (Exception $e) {
+        $itemlinks = [];
+    }
     if (isset($itemlinks[$itemid])) {
         $data['itemlink'] = $itemlinks[$itemid]['url'];
         $data['itemtitle'] = $itemlinks[$itemid]['title'];
@@ -135,7 +138,7 @@ function changelog_admin_showversion($args)
         $data['content'] = '';
 
         if (!empty($itemtype)) {
-            $getlist = xarModVars::get('changelog', $modinfo['name'].'.'.$itemtype);
+            $getlist = xarModVars::get('changelog', $modinfo['name'] . '.' . $itemtype);
         }
         if (!isset($getlist)) {
             $getlist = xarModVars::get('changelog', $modinfo['name']);
@@ -232,14 +235,14 @@ function changelog_admin_showversion($args)
                 $vars = [$modinfo['name']];
                 throw new BadParameterException($vars, $msg);
         }
-        xarResponse::Redirect(xarController::URL(
+        xarController::redirect(xarController::URL(
             'changelog',
             'admin',
             'showlog',
             ['modid' => $modid,
                   'itemtype' => $itemtype,
                   'itemid' => $itemid]
-        ));
+        ), null, $context);
         return true;
     }
 
@@ -288,7 +291,7 @@ function changelog_admin_showversion($args)
             ['modid' => $modid,
                   'itemtype' => $itemtype,
                   'itemid' => $itemid,
-                  'logids' => $logid.'-'.$nextid]
+                  'logids' => $logid . '-' . $nextid]
         );
     }
     if (!empty($previd)) {
@@ -309,7 +312,7 @@ function changelog_admin_showversion($args)
             ['modid' => $modid,
                   'itemtype' => $itemtype,
                   'itemid' => $itemid,
-                  'logids' => $previd.'-'.$logid]
+                  'logids' => $previd . '-' . $logid]
         );
     }
 

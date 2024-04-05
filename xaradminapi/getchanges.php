@@ -19,10 +19,9 @@
  * @param $args['itemid'] item id
  * @param $args['numitems'] number of entries to retrieve (optional)
  * @param $args['startnum'] starting number (optional)
- * @return array of changes
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return array|void of changes
  */
-function changelog_adminapi_getchanges($args)
+function changelog_adminapi_getchanges(array $args = [], $context = null)
 {
     extract($args);
 

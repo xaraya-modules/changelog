@@ -17,7 +17,7 @@ use Xaraya\Modules\ChangeLog\DiffLib;
 /**
  * show the differences between 2 versions of a module item
  */
-function changelog_admin_showdiff($args)
+function changelog_admin_showdiff(array $args = [], $context = null)
 {
     extract($args);
 
@@ -102,7 +102,7 @@ function changelog_admin_showdiff($args)
             ['modid' => $modid,
                   'itemtype' => $itemtype,
                   'itemid' => $itemid,
-                  'logids' => $newid.'-'.$nextid]
+                  'logids' => $newid . '-' . $nextid]
         );
     }
     if (!empty($previd)) {
@@ -113,7 +113,7 @@ function changelog_admin_showdiff($args)
             ['modid' => $modid,
                   'itemtype' => $itemtype,
                   'itemid' => $itemid,
-                  'logids' => $previd.'-'.$oldid]
+                  'logids' => $previd . '-' . $oldid]
         );
     }
 
@@ -168,14 +168,17 @@ function changelog_admin_showdiff($args)
     if (empty($modinfo['name'])) {
         return $data;
     }
-    $itemlinks = xarMod::apiFunc(
-        $modinfo['name'],
-        'user',
-        'getitemlinks',
-        ['itemtype' => $itemtype,
-              'itemids' => [$itemid]],
-        0
-    );
+    try {
+        $itemlinks = xarMod::apiFunc(
+            $modinfo['name'],
+            'user',
+            'getitemlinks',
+            ['itemtype' => $itemtype,
+            'itemids' => [$itemid]]
+        );
+    } catch (Exception $e) {
+        $itemlinks = [];
+    }
     if (isset($itemlinks[$itemid])) {
         $data['itemlink'] = $itemlinks[$itemid]['url'];
         $data['itemtitle'] = $itemlinks[$itemid]['title'];
@@ -183,7 +186,7 @@ function changelog_admin_showdiff($args)
     }
 
     if (!empty($itemtype)) {
-        $getlist = xarModVars::get('changelog', $modinfo['name'].'.'.$itemtype);
+        $getlist = xarModVars::get('changelog', $modinfo['name'] . '.' . $itemtype);
     }
     if (!isset($getlist)) {
         $getlist = xarModVars::get('changelog', $modinfo['name']);

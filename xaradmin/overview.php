@@ -14,7 +14,7 @@
  * Overview function that displays the standard Overview page
  *
  */
-function changelog_admin_overview()
+function changelog_admin_overview(array $args = [], $context = null)
 {
     /* Security Check */
     if (!xarSecurity::check('AdminChangeLog', 0)) {
