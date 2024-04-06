@@ -27,5 +27,6 @@ function changelog_admin_overview(array $args = [], $context = null)
      * else just call the main function that displays the overview
      */
 
-    return xarTpl::module('changelog', 'admin', 'main', $data, 'main');
+     $data['context'] ??= $context;
+     return xarTpl::module('changelog', 'admin', 'main', $data, 'main');
 }
