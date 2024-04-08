@@ -15,8 +15,7 @@
       {{ xar_translate('Actions:') }}
     </dt>
 
-        {% if activetab == 'view' or activetab == 'delete' or activetab == 'modify'
-                or activetab == 'showversion' or activetab == 'showdiff' or activetab == 'showlog' %}
+        {% if activetab in ['view', 'delete', 'modify', 'showversion', 'showdiff', 'showlog'] %}
             {% set tabclass = 'active' %}
         {% else %}
             {% set tabclass = '' %}
@@ -27,21 +26,21 @@
           </a>
         </dd>
 
-        {% set tabclass = activetab=='hooks'?'active'.'' %}
+        {% set tabclass = activetab=='hooks' ? 'active' ~ '' %}
         <dd class="{{ tabclass }}">
           <a href="&xar-modurl-changelog-admin-hooks;">
             {{ xar_translate('Hooks') }}
           </a>
         </dd>
 
-        {% set tabclass = activetab=='modifyconfig'?'active'.'' %}
+        {% set tabclass = activetab=='modifyconfig' ? 'active' ~ '' %}
         <dd class="{{ tabclass }}">
           <a href="&xar-modurl-changelog-admin-modifyconfig;">
             {{ xar_translate('Modify Config') }}
           </a>
         </dd>
 
-    {% set tabclass = activetab=='main'?'active'.'' %}
+    {% set tabclass = activetab=='main' ? 'active' ~ '' %}
     <dd class="{{ tabclass }}">
       <a href="&xar-modurl-changelog-admin-overview;">
         {{ xar_translate('Overview') }}
