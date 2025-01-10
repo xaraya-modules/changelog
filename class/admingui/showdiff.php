@@ -11,6 +11,7 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
+use Xaraya\Modules\ChangeLog\DiffLib;
 use Xaraya\Modules\MethodClass;
 use xarVar;
 use xarSecurity;
@@ -20,6 +21,7 @@ use xarLocale;
 use xarModVars;
 use sys;
 use BadParameterException;
+use Exception;
 
 sys::import('xaraya.modules.method');
 
@@ -303,6 +305,7 @@ class ShowdiffMethod extends MethodClass
             if ($diff->isEmpty()) {
                 $data['fields'][$field]['diff'] = '';
             } else {
+                // @todo no idea where this is now
                 $fmt = new XarayaDiffFormatter();
                 $difference = $fmt->format($diff);
                 $data['fields'][$field]['diff'] = nl2br($difference);

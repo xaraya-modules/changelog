@@ -31,7 +31,7 @@ class MainMethod extends MethodClass
      * Redirect to modifyconfig
      * @author mikespub
      * @access public
-     * @return bool true on success of redirect or void on failure
+     * @return bool|void true on success of redirect or void on failure
      */
     public function __invoke(array $args = [])
     {

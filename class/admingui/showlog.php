@@ -18,7 +18,7 @@ use xarMod;
 use xarController;
 use xarLocale;
 use sys;
-use BadParameterException;
+use Exception;
 
 sys::import('xaraya.modules.method');
 

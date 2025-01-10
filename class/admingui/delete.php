@@ -18,7 +18,7 @@ use xarMod;
 use xarSec;
 use xarController;
 use sys;
-use BadParameterException;
+use Exception;
 
 sys::import('xaraya.modules.method');
 
@@ -96,6 +96,7 @@ class DeleteMethod extends MethodClass
         // comment out the following line if you want this
         return xarML('This feature is currently disabled for security reasons');
 
+        /**
         if (!xarMod::apiFunc(
             'changelog',
             'admin',
@@ -110,5 +111,6 @@ class DeleteMethod extends MethodClass
         }
         xarController::redirect(xarController::URL('changelog', 'admin', 'view'), null, $this->getContext());
         return true;
+         */
     }
 }
