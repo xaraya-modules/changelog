@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Change Log Module version information
  *

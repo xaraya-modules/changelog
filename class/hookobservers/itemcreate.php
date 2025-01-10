@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Change Log Module version information
  *
@@ -147,15 +148,15 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $bindvars = [$nextId,
-                        (int) $modid,
-                        (int) $itemtype,
-                        (int) $itemid,
-                        (int) $editor,
-                        (string) $hostname,
-                        (int) $date,
-                        (string) $status,
-                        (string) $remark,
-                        (string) $content];
+            (int) $modid,
+            (int) $itemtype,
+            (int) $itemid,
+            (int) $editor,
+            (string) $hostname,
+            (int) $date,
+            (string) $status,
+            (string) $remark,
+            (string) $content];
 
         $result = $dbconn->Execute($query, $bindvars);
         if (!$result) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Change Log Module version information
  *
@@ -58,9 +59,9 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
             'admin',
             'getchanges',
             ['modid' => $modid,
-            'itemtype' => $itemtype,
-            'itemid' => $itemid,
-            'numitems' => 1],
+                'itemtype' => $itemtype,
+                'itemid' => $itemid,
+                'numitems' => 1],
             $context
         );
         // return empty string here
@@ -93,8 +94,8 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
             'admin',
             'showlog',
             ['modid' => $modid,
-            'itemtype' => $itemtype,
-            'itemid' => $itemid]
+                'itemtype' => $itemtype,
+                'itemid' => $itemid]
         );
         $data['context'] = $context;
 

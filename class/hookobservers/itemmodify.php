@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Change Log Module version information
  *
@@ -85,8 +86,8 @@ class ItemModifyObserver extends HookObserver implements ixarHookObserver
             'admin',
             'modifyhook',
             ['remark' => $remark,
-            'context' => $context,
-            'link' => $link]
+                'context' => $context,
+                'link' => $link]
         );
     }
 }
