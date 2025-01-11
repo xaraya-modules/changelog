@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
+
+use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\MethodClass;
 use xarSecurity;
 use xarModVars;
@@ -25,6 +27,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * changelog admin modifyconfig function
+ * @extends MethodClass<AdminGui>
  */
 class ModifyconfigMethod extends MethodClass
 {

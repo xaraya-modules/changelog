@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminApi;
 
+
+use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarSecurity;
 use xarDB;
@@ -21,6 +23,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * changelog adminapi delete function
+ * @extends MethodClass<AdminApi>
  */
 class DeleteMethod extends MethodClass
 {

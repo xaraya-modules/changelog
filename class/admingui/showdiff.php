@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
+
+use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\ChangeLog\DiffLib;
 use Xaraya\Modules\MethodClass;
 use xarVar;
@@ -27,6 +29,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * changelog admin showdiff function
+ * @extends MethodClass<AdminGui>
  */
 class ShowdiffMethod extends MethodClass
 {

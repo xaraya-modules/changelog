@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\ChangeLog\UserApi;
 
+
+use Xaraya\Modules\ChangeLog\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use xarSecurity;
@@ -22,6 +24,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * changelog userapi getitems function
+ * @extends MethodClass<UserApi>
  */
 class GetitemsMethod extends MethodClass
 {

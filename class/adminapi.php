@@ -18,6 +18,11 @@ sys::import('xaraya.modules.adminapi');
 
 /**
  * Handle the changelog admin API
+ *
+ * @method mixed delete(array $args)
+ * @method mixed getchanges(array $args)
+ * @method mixed getmenulinks(array $args)
+ * @method mixed getversion(array $args)
  * @extends AdminApiClass<Module>
  */
 class AdminApi extends AdminApiClass

@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminApi;
 
+
+use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarDB;
 use sys;
@@ -20,6 +22,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * changelog adminapi getchanges function
+ * @extends MethodClass<AdminApi>
  */
 class GetchangesMethod extends MethodClass
 {

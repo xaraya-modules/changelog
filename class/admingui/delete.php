@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
+
+use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\MethodClass;
 use xarSecurity;
 use xarVar;
@@ -24,6 +26,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * changelog admin delete function
+ * @extends MethodClass<AdminGui>
  */
 class DeleteMethod extends MethodClass
 {

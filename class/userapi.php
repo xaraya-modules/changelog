@@ -18,6 +18,9 @@ sys::import('xaraya.modules.userapi');
 
 /**
  * Handle the changelog user API
+ *
+ * @method mixed getitems(array $args)
+ * @method mixed getmodules(array $args)
  * @extends UserApiClass<Module>
  */
 class UserApi extends UserApiClass
