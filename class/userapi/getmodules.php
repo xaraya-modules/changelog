@@ -31,7 +31,8 @@ class GetmodulesMethod extends MethodClass
 
     /**
      * get the list of modules where we're tracking item changes
-     * @param mixed $args ['editor'] optional editor of the changelog entries
+     * @param array<mixed> $args
+     * @var mixed $editor optional editor of the changelog entries
      * @return array|null $array[$modid][$itemtype] = array('items' => $numitems,'changes' => $numchanges);
      */
     public function __invoke(array $args = [])
@@ -39,7 +40,7 @@ class GetmodulesMethod extends MethodClass
         extract($args);
 
         // Security Check
-        if (!xarSecurity::check('ReadChangeLog')) {
+        if (!$this->checkAccess('ReadChangeLog')) {
             return;
         }
 

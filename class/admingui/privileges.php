@@ -38,44 +38,44 @@ class PrivilegesMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!xarSecurity::check('AdminChangeLog')) {
+        if (!$this->checkAccess('AdminChangeLog')) {
             return;
         }
 
         extract($args);
 
         // fixed params
-        if (!xarVar::fetch('moduleid', 'isset', $moduleid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('moduleid', 'isset', $moduleid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('apply', 'isset', $apply, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('apply', 'isset', $apply, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('extpid', 'isset', $extpid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('extpid', 'isset', $extpid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('extname', 'isset', $extname, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('extname', 'isset', $extname, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('extrealm', 'isset', $extrealm, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('extrealm', 'isset', $extrealm, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('extmodule', 'isset', $extmodule, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('extmodule', 'isset', $extmodule, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('extcomponent', 'isset', $extcomponent, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('extcomponent', 'isset', $extcomponent, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('extinstance', 'isset', $extinstance, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('extinstance', 'isset', $extinstance, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('extlevel', 'isset', $extlevel, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('extlevel', 'isset', $extlevel, null, xarVar::DONT_SET)) {
             return;
         }
 
@@ -139,12 +139,12 @@ class PrivilegesMethod extends MethodClass
             }
 
             // redirect to the privilege
-            xarController::redirect(xarController::URL(
+            $this->redirect(xarController::URL(
                 'privileges',
                 'admin',
                 'modifyprivilege',
                 ['pid' => $pid]
-            ), null, $this->getContext());
+            ));
             return true;
         }
 
@@ -155,10 +155,10 @@ class PrivilegesMethod extends MethodClass
                                                 'cids'  => (empty($cid) ? null : array($cid))
                                                ));
             } else {
-                $numitems = xarML('probably');
+                $numitems = $this->translate('probably');
             }
         */
-        $numitems = xarML('probably');
+        $numitems = $this->translate('probably');
 
         $data = [
             'moduleid'     => $moduleid,
@@ -175,8 +175,8 @@ class PrivilegesMethod extends MethodClass
             'extinstance'  => xarVar::prepForDisplay(join(':', $newinstance)),
         ];
 
-        $data['refreshlabel'] = xarML('Refresh');
-        $data['applylabel'] = xarML('Finish and Apply to Privilege');
+        $data['refreshlabel'] = $this->translate('Refresh');
+        $data['applylabel'] = $this->translate('Finish and Apply to Privilege');
 
         return $data;
     }

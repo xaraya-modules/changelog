@@ -30,10 +30,11 @@ class GetversionMethod extends MethodClass
 
     /**
      * get a particular entry for a module item
-     * @param mixed $args ['modid'] module id
-     * @param mixed $args ['itemtype'] item type
-     * @param mixed $args ['itemid'] item id
-     * @param mixed $args ['logid'] log id
+     * @param array<mixed> $args
+     * @var mixed $modid module id
+     * @var mixed $itemtype item type
+     * @var mixed $itemid item id
+     * @var mixed $logid log id
      * @return array|void of changes
      */
     public function __invoke(array $args = [])

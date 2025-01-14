@@ -167,16 +167,16 @@ class Installer extends InstallerClass
         //    return;
         //}
 
-        xarModVars::set('changelog', 'SupportShortURLs', 0);
-        xarModVars::set('changelog', 'numstats', 100);
-        xarModVars::set('changelog', 'showtitle', false);
+        $this->setModVar('SupportShortURLs', 0);
+        $this->setModVar('numstats', 100);
+        $this->setModVar('showtitle', false);
 
         //$this->create_old_hooks();
         //$this->create_new_hooks();
 
         $instances = [
             ['header' => 'external', // this keyword indicates an external "wizard"
-                'query'  => xarController::URL('changelog', 'admin', 'privileges'),
+                'query'  => $this->getUrl('admin', 'privileges'),
                 'limit'  => 0,
             ],
         ];

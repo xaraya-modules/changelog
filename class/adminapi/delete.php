@@ -31,18 +31,19 @@ class DeleteMethod extends MethodClass
 
     /**
      * delete changelog entries
-     * @param mixed $args ['modid'] int module id, or
-     * @param mixed $args ['modname'] name of the calling module
-     * @param mixed $args ['itemtype'] optional item type for the item
-     * @param mixed $args ['itemid'] int item id
-     * @param mixed $args ['editor'] optional editor of the changelog entries
+     * @param array<mixed> $args
+     * @var mixed $modid int module id, or
+     * @var mixed $modname name of the calling module
+     * @var mixed $itemtype optional item type for the item
+     * @var mixed $itemid int item id
+     * @var mixed $editor optional editor of the changelog entries
      * @return bool|void true on success, false on failure
      */
     public function __invoke(array $args = [])
     {
         extract($args);
 
-        if (!xarSecurity::check('AdminChangeLog')) {
+        if (!$this->checkAccess('AdminChangeLog')) {
             return;
         }
 

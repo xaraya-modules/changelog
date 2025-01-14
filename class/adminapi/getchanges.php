@@ -30,11 +30,12 @@ class GetchangesMethod extends MethodClass
 
     /**
      * get entries for a module item
-     * @param mixed $args ['modid'] module id
-     * @param mixed $args ['itemtype'] item type
-     * @param mixed $args ['itemid'] item id
-     * @param mixed $args ['numitems'] number of entries to retrieve (optional)
-     * @param mixed $args ['startnum'] starting number (optional)
+     * @param array<mixed> $args
+     * @var mixed $modid module id
+     * @var mixed $itemtype item type
+     * @var mixed $itemid item id
+     * @var mixed $numitems number of entries to retrieve (optional)
+     * @var mixed $startnum starting number (optional)
      * @return array|void of changes
      */
     public function __invoke(array $args = [])

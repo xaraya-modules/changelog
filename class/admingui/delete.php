@@ -38,23 +38,23 @@ class DeleteMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!xarSecurity::check('AdminChangeLog')) {
+        if (!$this->checkAccess('AdminChangeLog')) {
             return;
         }
 
-        if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('editor', 'isset', $editor, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('editor', 'isset', $editor, null, xarVar::DONT_SET)) {
             return;
         }
 
@@ -85,19 +85,19 @@ class DeleteMethod extends MethodClass
                     }
                 }
             }
-            $data['confirmbutton'] = xarML('Confirm');
+            $data['confirmbutton'] = $this->translate('Confirm');
             // Generate a one-time authorisation code for this operation
-            $data['authid'] = xarSec::genAuthKey();
+            $data['authid'] = $this->genAuthKey();
             // Return the template variables defined in this function
             return $data;
         }
 
-        if (!xarSec::confirmAuthKey()) {
+        if (!$this->confirmAuthKey()) {
             return;
         }
 
         // comment out the following line if you want this
-        return xarML('This feature is currently disabled for security reasons');
+        return $this->translate('This feature is currently disabled for security reasons');
 
         /**
         if (!xarMod::apiFunc(
@@ -112,7 +112,7 @@ class DeleteMethod extends MethodClass
         )) {
             return;
         }
-        xarController::redirect(xarController::URL('changelog', 'admin', 'view'), null, $this->getContext());
+        $this->redirect($this->getUrl('admin', 'view'));
         return true;
          */
     }

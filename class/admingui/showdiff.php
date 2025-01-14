@@ -42,17 +42,17 @@ class ShowdiffMethod extends MethodClass
     {
         extract($args);
 
-        if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
             return;
         }
         // Note : this is an array or a string here
-        if (!xarVar::fetch('logids', 'isset', $logids, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('logids', 'isset', $logids, null, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -116,8 +116,7 @@ class ShowdiffMethod extends MethodClass
         $data['oldversion'] = $version[$oldid];
         $data['newversion'] = $version[$newid];
         if (!empty($nextid)) {
-            $data['nextdiff'] = xarController::URL(
-                'changelog',
+            $data['nextdiff'] = $this->getUrl(
                 'admin',
                 'showdiff',
                 ['modid' => $modid,
@@ -127,8 +126,7 @@ class ShowdiffMethod extends MethodClass
             );
         }
         if (!empty($previd)) {
-            $data['prevdiff'] = xarController::URL(
-                'changelog',
+            $data['prevdiff'] = $this->getUrl(
                 'admin',
                 'showdiff',
                 ['modid' => $modid,
@@ -142,7 +140,7 @@ class ShowdiffMethod extends MethodClass
         $data['changes'][$newid] = $changes[$newid];
         $data['changes'][$oldid] = $changes[$oldid];
 
-        if (xarSecurity::check('AdminChangeLog', 0)) {
+        if ($this->checkAccess('AdminChangeLog', 0)) {
             $data['showhost'] = 1;
         } else {
             $data['showhost'] = 0;
@@ -159,8 +157,7 @@ class ShowdiffMethod extends MethodClass
                 $data['changes'][$logid]['hostname'] = '';
                 $data['changes'][$logid]['link'] = '';
             } else {
-                $data['changes'][$logid]['link'] = xarController::URL(
-                    'changelog',
+                $data['changes'][$logid]['link'] = $this->getUrl(
                     'admin',
                     'showversion',
                     ['modid' => $modid,
@@ -176,8 +173,7 @@ class ShowdiffMethod extends MethodClass
             $data['changes'][$logid]['version'] = $version[$logid];
         }
 
-        $data['link'] = xarController::URL(
-            'changelog',
+        $data['link'] = $this->getUrl(
             'admin',
             'showlog',
             ['modid' => $modid,
@@ -207,10 +203,10 @@ class ShowdiffMethod extends MethodClass
         }
 
         if (!empty($itemtype)) {
-            $getlist = xarModVars::get('changelog', $modinfo['name'] . '.' . $itemtype);
+            $getlist = $this->getModVar($modinfo['name'] . '.' . $itemtype);
         }
         if (!isset($getlist)) {
-            $getlist = xarModVars::get('changelog', $modinfo['name']);
+            $getlist = $this->getModVar($modinfo['name']);
         }
         if (!empty($getlist)) {
             $fieldlist = explode(',', $getlist);

@@ -39,26 +39,26 @@ class UpdateconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Get parameters
-        if (!xarVar::fetch('changelog', 'isset', $changelog, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('changelog', 'isset', $changelog, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('includedd', 'isset', $includedd, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('includedd', 'isset', $includedd, null, xarVar::NOT_REQUIRED)) {
             return;
         }
 
         // Confirm authorisation code
-        if (!xarSec::confirmAuthKey()) {
+        if (!$this->confirmAuthKey()) {
             return;
         }
         // Security Check
-        if (!xarSecurity::check('AdminChangeLog')) {
+        if (!$this->checkAccess('AdminChangeLog')) {
             return;
         }
 
         if (isset($changelog) && is_array($changelog)) {
             foreach ($changelog as $modname => $value) {
                 if ($modname == 'default') {
-                    xarModVars::set('changelog', 'default', $value);
+                    $this->setModVar('default', $value);
                 } else {
                     xarModVars::set('changelog', $modname, $value);
                 }
@@ -83,18 +83,18 @@ class UpdateconfigMethod extends MethodClass
         } else {
             $withdd = '';
         }
-        xarModVars::set('changelog', 'withdd', $withdd);
+        $this->setModVar('withdd', $withdd);
 
-        if (!xarVar::fetch('numstats', 'int', $numstats, 100, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('numstats', 'int', $numstats, 100, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('showtitle', 'checkbox', $showtitle, false, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('showtitle', 'checkbox', $showtitle, false, xarVar::NOT_REQUIRED)) {
             return;
         }
-        xarModVars::set('changelog', 'numstats', $numstats);
-        xarModVars::set('changelog', 'showtitle', $showtitle);
+        $this->setModVar('numstats', $numstats);
+        $this->setModVar('showtitle', $showtitle);
 
-        xarController::redirect(xarController::URL('changelog', 'admin', 'modifyconfig'), null, $this->getContext());
+        $this->redirect($this->getUrl('admin', 'modifyconfig'));
 
         return true;
     }

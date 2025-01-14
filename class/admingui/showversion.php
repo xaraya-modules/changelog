@@ -46,22 +46,22 @@ class ShowversionMethod extends MethodClass
         // List of currently supported restore modules (see API calls below)
         $supported = ['articles', 'dynamicdata', 'xarpages'];
 
-        if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('logid', 'isset', $logid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('logid', 'isset', $logid, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('restore', 'isset', $restore, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('restore', 'isset', $restore, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('confirm', 'isset', $confirm, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('confirm', 'isset', $confirm, null, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -82,7 +82,7 @@ class ShowversionMethod extends MethodClass
             return;
         }
 
-        if (xarSecurity::check('AdminChangeLog', 0)) {
+        if ($this->checkAccess('AdminChangeLog', 0)) {
             $data['showhost'] = 1;
         } else {
             $data['showhost'] = 0;
@@ -102,8 +102,7 @@ class ShowversionMethod extends MethodClass
         }
         // 2template $data['date'] = xarLocale::formatDate($data['date']);
 
-        $data['link'] = xarController::URL(
-            'changelog',
+        $data['link'] = $this->getUrl(
             'admin',
             'showlog',
             ['modid' => $modid,
@@ -136,7 +135,7 @@ class ShowversionMethod extends MethodClass
         }
 
         // Check for confirmation
-        if (!empty($confirm) && !xarSec::confirmAuthKey()) {
+        if (!empty($confirm) && !$this->confirmAuthKey()) {
             return;
         }
 
@@ -162,10 +161,10 @@ class ShowversionMethod extends MethodClass
             $data['content'] = '';
 
             if (!empty($itemtype)) {
-                $getlist = xarModVars::get('changelog', $modinfo['name'] . '.' . $itemtype);
+                $getlist = $this->getModVar($modinfo['name'] . '.' . $itemtype);
             }
             if (!isset($getlist)) {
-                $getlist = xarModVars::get('changelog', $modinfo['name']);
+                $getlist = $this->getModVar($modinfo['name']);
             }
             if (!empty($getlist)) {
                 $fieldlist = explode(',', $getlist);
@@ -259,14 +258,13 @@ class ShowversionMethod extends MethodClass
                     $vars = [$modinfo['name']];
                     throw new BadParameterException($vars, $msg);
             }
-            xarController::redirect(xarController::URL(
-                'changelog',
+            $this->redirect($this->getUrl(
                 'admin',
                 'showlog',
                 ['modid' => $modid,
                     'itemtype' => $itemtype,
                     'itemid' => $itemid]
-            ), null, $this->getContext());
+            ));
             return true;
         }
 
@@ -298,8 +296,7 @@ class ShowversionMethod extends MethodClass
 
         $data['version'] = $version[$logid];
         if (!empty($nextid)) {
-            $data['nextversion'] = xarController::URL(
-                'changelog',
+            $data['nextversion'] = $this->getUrl(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -308,8 +305,7 @@ class ShowversionMethod extends MethodClass
                     'logid' => $nextid,
                     'restore' => $restore]
             );
-            $data['nextdiff'] = xarController::URL(
-                'changelog',
+            $data['nextdiff'] = $this->getUrl(
                 'admin',
                 'showdiff',
                 ['modid' => $modid,
@@ -319,8 +315,7 @@ class ShowversionMethod extends MethodClass
             );
         }
         if (!empty($previd)) {
-            $data['prevversion'] = xarController::URL(
-                'changelog',
+            $data['prevversion'] = $this->getUrl(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -329,8 +324,7 @@ class ShowversionMethod extends MethodClass
                     'logid' => $previd,
                     'restore' => $restore]
             );
-            $data['prevdiff'] = xarController::URL(
-                'changelog',
+            $data['prevdiff'] = $this->getUrl(
                 'admin',
                 'showdiff',
                 ['modid' => $modid,
@@ -341,8 +335,7 @@ class ShowversionMethod extends MethodClass
         }
 
         if (!empty($restore)) {
-            $data['showlink'] = xarController::URL(
-                'changelog',
+            $data['showlink'] = $this->getUrl(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -350,13 +343,12 @@ class ShowversionMethod extends MethodClass
                     'itemid' => $itemid,
                     'logid' => $logid]
             );
-            $data['confirmbutton'] = xarML('Confirm');
+            $data['confirmbutton'] = $this->translate('Confirm');
             // Generate a one-time authorisation code for this operation
-            $data['authid'] = xarSec::genAuthKey();
+            $data['authid'] = $this->genAuthKey();
             $data['restore'] = 1;
         } elseif (in_array($modinfo['name'], $supported)) {
-            $data['restorelink'] = xarController::URL(
-                'changelog',
+            $data['restorelink'] = $this->getUrl(
                 'admin',
                 'showversion',
                 ['modid' => $modid,

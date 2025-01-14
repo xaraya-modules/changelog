@@ -39,13 +39,13 @@ class ShowlogMethod extends MethodClass
     {
         extract($args);
 
-        if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -66,7 +66,7 @@ class ShowlogMethod extends MethodClass
             return;
         }
 
-        if (xarSecurity::check('AdminChangeLog', 0)) {
+        if ($this->checkAccess('AdminChangeLog', 0)) {
             $data['showhost'] = 1;
         } else {
             $data['showhost'] = 0;
@@ -84,8 +84,7 @@ class ShowlogMethod extends MethodClass
                 $data['changes'][$logid]['hostname'] = '';
                 $data['changes'][$logid]['link'] = '';
             } else {
-                $data['changes'][$logid]['link'] = xarController::URL(
-                    'changelog',
+                $data['changes'][$logid]['link'] = $this->getUrl(
                     'admin',
                     'showversion',
                     ['modid' => $modid,
@@ -110,8 +109,7 @@ class ShowlogMethod extends MethodClass
 
         if (count($logidlist) > 0) {
             $firstid = $logidlist[count($logidlist) - 1];
-            $data['prevversion'] = xarController::URL(
-                'changelog',
+            $data['prevversion'] = $this->getUrl(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -121,8 +119,7 @@ class ShowlogMethod extends MethodClass
             );
             if (count($logidlist) > 1) {
                 $previd = $logidlist[count($logidlist) - 2];
-                $data['prevdiff'] = xarController::URL(
-                    'changelog',
+                $data['prevdiff'] = $this->getUrl(
                     'admin',
                     'showdiff',
                     ['modid' => $modid,
@@ -134,8 +131,7 @@ class ShowlogMethod extends MethodClass
         }
         if (count($logidlist) > 1) {
             $lastid = $logidlist[0];
-            $data['nextversion'] = xarController::URL(
-                'changelog',
+            $data['nextversion'] = $this->getUrl(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -145,8 +141,7 @@ class ShowlogMethod extends MethodClass
             );
             if (count($logidlist) > 2) {
                 $nextid = $logidlist[1];
-                $data['nextdiff'] = xarController::URL(
-                    'changelog',
+                $data['nextdiff'] = $this->getUrl(
                     'admin',
                     'showdiff',
                     ['modid' => $modid,

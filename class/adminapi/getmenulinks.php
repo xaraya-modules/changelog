@@ -38,28 +38,16 @@ class GetmenulinksMethod extends MethodClass
     {
         $menulinks = [];
         // Security Check
-        if (xarSecurity::check('AdminChangeLog')) {
-            $menulinks[] = ['url'   => xarController::URL(
-                'changelog',
-                'admin',
-                'view'
-            ),
-                'title' => xarML('View changelog entries per module'),
-                'label' => xarML('View Changes')];
-            $menulinks[] = ['url'   => xarController::URL(
-                'changelog',
-                'admin',
-                'hooks'
-            ),
-                'title' => xarML('Configure changelog hooks for other modules'),
-                'label' => xarML('Enable Hooks')];
-            $menulinks[] = ['url'   => xarController::URL(
-                'changelog',
-                'admin',
-                'modifyconfig'
-            ),
-                'title' => xarML('Modify the changelog configuration'),
-                'label' => xarML('Modify Config')];
+        if ($this->checkAccess('AdminChangeLog')) {
+            $menulinks[] = ['url'   => $this->getUrl('admin', 'view'),
+                'title' => $this->translate('View changelog entries per module'),
+                'label' => $this->translate('View Changes')];
+            $menulinks[] = ['url'   => $this->getUrl('admin', 'hooks'),
+                'title' => $this->translate('Configure changelog hooks for other modules'),
+                'label' => $this->translate('Enable Hooks')];
+            $menulinks[] = ['url'   => $this->getUrl('admin', 'modifyconfig'),
+                'title' => $this->translate('Modify the changelog configuration'),
+                'label' => $this->translate('Modify Config')];
         }
 
         return $menulinks;

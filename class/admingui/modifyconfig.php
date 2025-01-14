@@ -42,18 +42,18 @@ class ModifyconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!xarSecurity::check('AdminChangeLog')) {
+        if (!$this->checkAccess('AdminChangeLog')) {
             return;
         }
 
         $data = [];
         $data['settings'] = [];
 
-        $changelog = xarModVars::get('changelog', 'default');
-        $data['settings']['default'] = ['label' => xarML('Default configuration'),
+        $changelog = $this->getModVar('default');
+        $data['settings']['default'] = ['label' => $this->translate('Default configuration'),
             'changelog' => $changelog,
             'includedd' => 0];
-        $withdd = xarModVars::get('changelog', 'withdd');
+        $withdd = $this->getModVar('withdd');
         if (empty($withdd)) {
             $withdd = '';
         }
@@ -76,7 +76,7 @@ class ModifyconfigMethod extends MethodClass
                         $mytypes = [];
                     }
                     foreach ($value as $itemtype => $val) {
-                        $changelog = xarModVars::get('changelog', "$modname.$itemtype");
+                        $changelog = $this->getModVar("$modname.$itemtype");
                         if (empty($changelog)) {
                             $changelog = '';
                         }
@@ -84,7 +84,7 @@ class ModifyconfigMethod extends MethodClass
                             $type = $mytypes[$itemtype]['label'];
                             $link = $mytypes[$itemtype]['url'];
                         } else {
-                            $type = xarML('type #(1)', $itemtype);
+                            $type = $this->translate('type #(1)', $itemtype);
                             $link = xarController::URL($modname, 'user', 'view', ['itemtype' => $itemtype]);
                         }
                         if (xarModHooks::isHooked('dynamicdata', $modname, $itemtype)) {
@@ -96,12 +96,12 @@ class ModifyconfigMethod extends MethodClass
                         } else {
                             $includedd = 0;
                         }
-                        $data['settings']["$modname.$itemtype"] = ['label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
+                        $data['settings']["$modname.$itemtype"] = ['label' => $this->translate('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                             'changelog' => $changelog,
                             'includedd' => $includedd];
                     }
                 } else {
-                    $changelog = xarModVars::get('changelog', $modname);
+                    $changelog = $this->getModVar($modname);
                     if (empty($changelog)) {
                         $changelog = '';
                     }
@@ -115,23 +115,23 @@ class ModifyconfigMethod extends MethodClass
                         $includedd = 0;
                     }
                     $link = xarController::URL($modname, 'user', 'main');
-                    $data['settings'][$modname] = ['label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
+                    $data['settings'][$modname] = ['label' => $this->translate('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                         'changelog' => $changelog,
                         'includedd' => $includedd];
                 }
             }
         }
 
-        $data['numstats'] = xarModVars::get('changelog', 'numstats');
+        $data['numstats'] = $this->getModVar('numstats');
         if (empty($data['numstats'])) {
             $data['numstats'] = 100;
         }
-        $data['showtitle'] = xarModVars::get('changelog', 'showtitle');
+        $data['showtitle'] = $this->getModVar('showtitle');
         if (!empty($data['showtitle'])) {
             $data['showtitle'] = 1;
         }
 
-        $data['authid'] = xarSec::genAuthKey();
+        $data['authid'] = $this->genAuthKey();
         return $data;
     }
 }

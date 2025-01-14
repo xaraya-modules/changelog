@@ -39,11 +39,11 @@ class MainMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!xarSecurity::check('AdminChangeLog')) {
+        if (!$this->checkAccess('AdminChangeLog')) {
             return;
         }
 
-        xarController::redirect(xarController::URL('changelog', 'admin', 'view'), null, $this->getContext());
+        $this->redirect($this->getUrl('admin', 'view'));
         // success
         return true;
     }

@@ -32,8 +32,7 @@ class GetitemsMethod extends MethodClass
 
     /**
      * get the number of changes for a list of items
-     * @param array $args
-     * with
+     * @param array<mixed> $args
      *     $args['modname'] name of the module you want items from, or
      *     $args['modid'] module id you want items from
      *     $args['itemtype'] item type of the items (only 1 type supported per call)
