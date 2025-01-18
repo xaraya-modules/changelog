@@ -46,22 +46,22 @@ class ShowversionMethod extends MethodClass
         // List of currently supported restore modules (see API calls below)
         $supported = ['articles', 'dynamicdata', 'xarpages'];
 
-        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('modid', $modid)) {
             return;
         }
-        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('itemtype', $itemtype)) {
             return;
         }
-        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('itemid', $itemid)) {
             return;
         }
-        if (!$this->fetch('logid', 'isset', $logid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('logid', $logid)) {
             return;
         }
-        if (!$this->fetch('restore', 'isset', $restore, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('restore', $restore)) {
             return;
         }
-        if (!$this->fetch('confirm', 'isset', $confirm, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('confirm', $confirm)) {
             return;
         }
 
@@ -82,7 +82,7 @@ class ShowversionMethod extends MethodClass
             return;
         }
 
-        if ($this->checkAccess('AdminChangeLog', 0)) {
+        if ($this->sec()->checkAccess('AdminChangeLog', 0)) {
             $data['showhost'] = 1;
         } else {
             $data['showhost'] = 0;
@@ -102,7 +102,7 @@ class ShowversionMethod extends MethodClass
         }
         // 2template $data['date'] = xarLocale::formatDate($data['date']);
 
-        $data['link'] = $this->getUrl(
+        $data['link'] = $this->mod()->getURL(
             'admin',
             'showlog',
             ['modid' => $modid,
@@ -135,7 +135,7 @@ class ShowversionMethod extends MethodClass
         }
 
         // Check for confirmation
-        if (!empty($confirm) && !$this->confirmAuthKey()) {
+        if (!empty($confirm) && !$this->sec()->confirmAuthKey()) {
             return;
         }
 
@@ -161,10 +161,10 @@ class ShowversionMethod extends MethodClass
             $data['content'] = '';
 
             if (!empty($itemtype)) {
-                $getlist = $this->getModVar($modinfo['name'] . '.' . $itemtype);
+                $getlist = $this->mod()->getVar($modinfo['name'] . '.' . $itemtype);
             }
             if (!isset($getlist)) {
-                $getlist = $this->getModVar($modinfo['name']);
+                $getlist = $this->mod()->getVar($modinfo['name']);
             }
             if (!empty($getlist)) {
                 $fieldlist = explode(',', $getlist);
@@ -258,7 +258,7 @@ class ShowversionMethod extends MethodClass
                     $vars = [$modinfo['name']];
                     throw new BadParameterException($vars, $msg);
             }
-            $this->redirect($this->getUrl(
+            $this->ctl()->redirect($this->mod()->getURL(
                 'admin',
                 'showlog',
                 ['modid' => $modid,
@@ -296,7 +296,7 @@ class ShowversionMethod extends MethodClass
 
         $data['version'] = $version[$logid];
         if (!empty($nextid)) {
-            $data['nextversion'] = $this->getUrl(
+            $data['nextversion'] = $this->mod()->getURL(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -305,7 +305,7 @@ class ShowversionMethod extends MethodClass
                     'logid' => $nextid,
                     'restore' => $restore]
             );
-            $data['nextdiff'] = $this->getUrl(
+            $data['nextdiff'] = $this->mod()->getURL(
                 'admin',
                 'showdiff',
                 ['modid' => $modid,
@@ -315,7 +315,7 @@ class ShowversionMethod extends MethodClass
             );
         }
         if (!empty($previd)) {
-            $data['prevversion'] = $this->getUrl(
+            $data['prevversion'] = $this->mod()->getURL(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -324,7 +324,7 @@ class ShowversionMethod extends MethodClass
                     'logid' => $previd,
                     'restore' => $restore]
             );
-            $data['prevdiff'] = $this->getUrl(
+            $data['prevdiff'] = $this->mod()->getURL(
                 'admin',
                 'showdiff',
                 ['modid' => $modid,
@@ -335,7 +335,7 @@ class ShowversionMethod extends MethodClass
         }
 
         if (!empty($restore)) {
-            $data['showlink'] = $this->getUrl(
+            $data['showlink'] = $this->mod()->getURL(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -343,12 +343,12 @@ class ShowversionMethod extends MethodClass
                     'itemid' => $itemid,
                     'logid' => $logid]
             );
-            $data['confirmbutton'] = $this->translate('Confirm');
+            $data['confirmbutton'] = $this->ml('Confirm');
             // Generate a one-time authorisation code for this operation
-            $data['authid'] = $this->genAuthKey();
+            $data['authid'] = $this->sec()->genAuthKey();
             $data['restore'] = 1;
         } elseif (in_array($modinfo['name'], $supported)) {
-            $data['restorelink'] = $this->getUrl(
+            $data['restorelink'] = $this->mod()->getURL(
                 'admin',
                 'showversion',
                 ['modid' => $modid,

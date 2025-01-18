@@ -37,7 +37,7 @@ class HooksMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         /* Security Check */
-        if (!$this->checkAccess('AdminChangelog', 0)) {
+        if (!$this->sec()->checkAccess('AdminChangelog', 0)) {
             return;
         }
 

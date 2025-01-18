@@ -167,16 +167,16 @@ class Installer extends InstallerClass
         //    return;
         //}
 
-        $this->setModVar('SupportShortURLs', 0);
-        $this->setModVar('numstats', 100);
-        $this->setModVar('showtitle', false);
+        $this->mod()->setVar('SupportShortURLs', 0);
+        $this->mod()->setVar('numstats', 100);
+        $this->mod()->setVar('showtitle', false);
 
         //$this->create_old_hooks();
         //$this->create_new_hooks();
 
         $instances = [
             ['header' => 'external', // this keyword indicates an external "wizard"
-                'query'  => $this->getUrl('admin', 'privileges'),
+                'query'  => $this->mod()->getURL('admin', 'privileges'),
                 'limit'  => 0,
             ],
         ];

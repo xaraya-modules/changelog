@@ -39,13 +39,13 @@ class ShowlogMethod extends MethodClass
     {
         extract($args);
 
-        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('modid', $modid)) {
             return;
         }
-        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('itemtype', $itemtype)) {
             return;
         }
-        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('itemid', $itemid)) {
             return;
         }
 
@@ -66,7 +66,7 @@ class ShowlogMethod extends MethodClass
             return;
         }
 
-        if ($this->checkAccess('AdminChangeLog', 0)) {
+        if ($this->sec()->checkAccess('AdminChangeLog', 0)) {
             $data['showhost'] = 1;
         } else {
             $data['showhost'] = 0;
@@ -84,7 +84,7 @@ class ShowlogMethod extends MethodClass
                 $data['changes'][$logid]['hostname'] = '';
                 $data['changes'][$logid]['link'] = '';
             } else {
-                $data['changes'][$logid]['link'] = $this->getUrl(
+                $data['changes'][$logid]['link'] = $this->mod()->getURL(
                     'admin',
                     'showversion',
                     ['modid' => $modid,
@@ -109,7 +109,7 @@ class ShowlogMethod extends MethodClass
 
         if (count($logidlist) > 0) {
             $firstid = $logidlist[count($logidlist) - 1];
-            $data['prevversion'] = $this->getUrl(
+            $data['prevversion'] = $this->mod()->getURL(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -119,7 +119,7 @@ class ShowlogMethod extends MethodClass
             );
             if (count($logidlist) > 1) {
                 $previd = $logidlist[count($logidlist) - 2];
-                $data['prevdiff'] = $this->getUrl(
+                $data['prevdiff'] = $this->mod()->getURL(
                     'admin',
                     'showdiff',
                     ['modid' => $modid,
@@ -131,7 +131,7 @@ class ShowlogMethod extends MethodClass
         }
         if (count($logidlist) > 1) {
             $lastid = $logidlist[0];
-            $data['nextversion'] = $this->getUrl(
+            $data['nextversion'] = $this->mod()->getURL(
                 'admin',
                 'showversion',
                 ['modid' => $modid,
@@ -141,7 +141,7 @@ class ShowlogMethod extends MethodClass
             );
             if (count($logidlist) > 2) {
                 $nextid = $logidlist[1];
-                $data['nextdiff'] = $this->getUrl(
+                $data['nextdiff'] = $this->mod()->getURL(
                     'admin',
                     'showdiff',
                     ['modid' => $modid,

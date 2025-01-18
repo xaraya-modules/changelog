@@ -38,16 +38,16 @@ class GetmenulinksMethod extends MethodClass
     {
         $menulinks = [];
         // Security Check
-        if ($this->checkAccess('AdminChangeLog')) {
-            $menulinks[] = ['url'   => $this->getUrl('admin', 'view'),
-                'title' => $this->translate('View changelog entries per module'),
-                'label' => $this->translate('View Changes')];
-            $menulinks[] = ['url'   => $this->getUrl('admin', 'hooks'),
-                'title' => $this->translate('Configure changelog hooks for other modules'),
-                'label' => $this->translate('Enable Hooks')];
-            $menulinks[] = ['url'   => $this->getUrl('admin', 'modifyconfig'),
-                'title' => $this->translate('Modify the changelog configuration'),
-                'label' => $this->translate('Modify Config')];
+        if ($this->sec()->checkAccess('AdminChangeLog')) {
+            $menulinks[] = ['url'   => $this->mod()->getURL('admin', 'view'),
+                'title' => $this->ml('View changelog entries per module'),
+                'label' => $this->ml('View Changes')];
+            $menulinks[] = ['url'   => $this->mod()->getURL('admin', 'hooks'),
+                'title' => $this->ml('Configure changelog hooks for other modules'),
+                'label' => $this->ml('Enable Hooks')];
+            $menulinks[] = ['url'   => $this->mod()->getURL('admin', 'modifyconfig'),
+                'title' => $this->ml('Modify the changelog configuration'),
+                'label' => $this->ml('Modify Config')];
         }
 
         return $menulinks;

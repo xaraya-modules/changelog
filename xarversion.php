@@ -14,7 +14,7 @@
 $modversion['name']           = 'Change Log';
 $modversion['id']             = '185';
 $modversion['version']        = '2.4.2';
-$modversion['displayname']    = xarML('ChangeLog');
+$modversion['displayname']    = xarMLS::translate('ChangeLog');
 $modversion['description']    = 'Keep track of changes to module items';
 $modversion['credits']        = '';
 $modversion['help']           = '';

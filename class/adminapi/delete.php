@@ -43,7 +43,7 @@ class DeleteMethod extends MethodClass
     {
         extract($args);
 
-        if (!$this->checkAccess('AdminChangeLog')) {
+        if (!$this->sec()->checkAccess('AdminChangeLog')) {
             return;
         }
 

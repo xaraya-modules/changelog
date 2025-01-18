@@ -39,28 +39,28 @@ class UpdateconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Get parameters
-        if (!$this->fetch('changelog', 'isset', $changelog, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('changelog', $changelog)) {
             return;
         }
-        if (!$this->fetch('includedd', 'isset', $includedd, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('includedd', $includedd)) {
             return;
         }
 
         // Confirm authorisation code
-        if (!$this->confirmAuthKey()) {
+        if (!$this->sec()->confirmAuthKey()) {
             return;
         }
         // Security Check
-        if (!$this->checkAccess('AdminChangeLog')) {
+        if (!$this->sec()->checkAccess('AdminChangeLog')) {
             return;
         }
 
         if (isset($changelog) && is_array($changelog)) {
             foreach ($changelog as $modname => $value) {
                 if ($modname == 'default') {
-                    $this->setModVar('default', $value);
+                    $this->mod()->setVar('default', $value);
                 } else {
-                    xarModVars::set('changelog', $modname, $value);
+                    $this->mod()->setVar($modname, $value);
                 }
             }
         }
@@ -83,18 +83,18 @@ class UpdateconfigMethod extends MethodClass
         } else {
             $withdd = '';
         }
-        $this->setModVar('withdd', $withdd);
+        $this->mod()->setVar('withdd', $withdd);
 
-        if (!$this->fetch('numstats', 'int', $numstats, 100, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('numstats', $numstats, 'int', 100)) {
             return;
         }
-        if (!$this->fetch('showtitle', 'checkbox', $showtitle, false, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('showtitle', $showtitle, 'checkbox', false)) {
             return;
         }
-        $this->setModVar('numstats', $numstats);
-        $this->setModVar('showtitle', $showtitle);
+        $this->mod()->setVar('numstats', $numstats);
+        $this->mod()->setVar('showtitle', $showtitle);
 
-        $this->redirect($this->getUrl('admin', 'modifyconfig'));
+        $this->ctl()->redirect($this->mod()->getURL('admin', 'modifyconfig'));
 
         return true;
     }

@@ -40,7 +40,7 @@ class GetmodulesMethod extends MethodClass
         extract($args);
 
         // Security Check
-        if (!$this->checkAccess('ReadChangeLog')) {
+        if (!$this->sec()->checkAccess('ReadChangeLog')) {
             return;
         }
 

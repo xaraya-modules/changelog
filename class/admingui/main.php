@@ -39,11 +39,11 @@ class MainMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!$this->checkAccess('AdminChangeLog')) {
+        if (!$this->sec()->checkAccess('AdminChangeLog')) {
             return;
         }
 
-        $this->redirect($this->getUrl('admin', 'view'));
+        $this->ctl()->redirect($this->mod()->getURL('admin', 'view'));
         // success
         return true;
     }

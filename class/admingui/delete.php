@@ -38,23 +38,23 @@ class DeleteMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!$this->checkAccess('AdminChangeLog')) {
+        if (!$this->sec()->checkAccess('AdminChangeLog')) {
             return;
         }
 
-        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('modid', $modid)) {
             return;
         }
-        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('itemtype', $itemtype)) {
             return;
         }
-        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('itemid', $itemid)) {
             return;
         }
-        if (!$this->fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('confirm', $confirm, 'str:1:', '')) {
             return;
         }
-        if (!$this->fetch('editor', 'isset', $editor, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('editor', $editor)) {
             return;
         }
 
@@ -85,19 +85,19 @@ class DeleteMethod extends MethodClass
                     }
                 }
             }
-            $data['confirmbutton'] = $this->translate('Confirm');
+            $data['confirmbutton'] = $this->ml('Confirm');
             // Generate a one-time authorisation code for this operation
-            $data['authid'] = $this->genAuthKey();
+            $data['authid'] = $this->sec()->genAuthKey();
             // Return the template variables defined in this function
             return $data;
         }
 
-        if (!$this->confirmAuthKey()) {
+        if (!$this->sec()->confirmAuthKey()) {
             return;
         }
 
         // comment out the following line if you want this
-        return $this->translate('This feature is currently disabled for security reasons');
+        return $this->ml('This feature is currently disabled for security reasons');
 
         /**
         if (!xarMod::apiFunc(
@@ -112,7 +112,7 @@ class DeleteMethod extends MethodClass
         )) {
             return;
         }
-        $this->redirect($this->getUrl('admin', 'view'));
+        $this->ctl()->redirect($this->mod()->getURL('admin', 'view'));
         return true;
          */
     }

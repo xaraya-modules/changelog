@@ -42,17 +42,17 @@ class ShowdiffMethod extends MethodClass
     {
         extract($args);
 
-        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('modid', $modid)) {
             return;
         }
-        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('itemtype', $itemtype)) {
             return;
         }
-        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('itemid', $itemid)) {
             return;
         }
         // Note : this is an array or a string here
-        if (!$this->fetch('logids', 'isset', $logids, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('logids', $logids)) {
             return;
         }
 
@@ -116,7 +116,7 @@ class ShowdiffMethod extends MethodClass
         $data['oldversion'] = $version[$oldid];
         $data['newversion'] = $version[$newid];
         if (!empty($nextid)) {
-            $data['nextdiff'] = $this->getUrl(
+            $data['nextdiff'] = $this->mod()->getURL(
                 'admin',
                 'showdiff',
                 ['modid' => $modid,
@@ -126,7 +126,7 @@ class ShowdiffMethod extends MethodClass
             );
         }
         if (!empty($previd)) {
-            $data['prevdiff'] = $this->getUrl(
+            $data['prevdiff'] = $this->mod()->getURL(
                 'admin',
                 'showdiff',
                 ['modid' => $modid,
@@ -140,7 +140,7 @@ class ShowdiffMethod extends MethodClass
         $data['changes'][$newid] = $changes[$newid];
         $data['changes'][$oldid] = $changes[$oldid];
 
-        if ($this->checkAccess('AdminChangeLog', 0)) {
+        if ($this->sec()->checkAccess('AdminChangeLog', 0)) {
             $data['showhost'] = 1;
         } else {
             $data['showhost'] = 0;
@@ -157,7 +157,7 @@ class ShowdiffMethod extends MethodClass
                 $data['changes'][$logid]['hostname'] = '';
                 $data['changes'][$logid]['link'] = '';
             } else {
-                $data['changes'][$logid]['link'] = $this->getUrl(
+                $data['changes'][$logid]['link'] = $this->mod()->getURL(
                     'admin',
                     'showversion',
                     ['modid' => $modid,
@@ -173,7 +173,7 @@ class ShowdiffMethod extends MethodClass
             $data['changes'][$logid]['version'] = $version[$logid];
         }
 
-        $data['link'] = $this->getUrl(
+        $data['link'] = $this->mod()->getURL(
             'admin',
             'showlog',
             ['modid' => $modid,
@@ -203,10 +203,10 @@ class ShowdiffMethod extends MethodClass
         }
 
         if (!empty($itemtype)) {
-            $getlist = $this->getModVar($modinfo['name'] . '.' . $itemtype);
+            $getlist = $this->mod()->getVar($modinfo['name'] . '.' . $itemtype);
         }
         if (!isset($getlist)) {
-            $getlist = $this->getModVar($modinfo['name']);
+            $getlist = $this->mod()->getVar($modinfo['name']);
         }
         if (!empty($getlist)) {
             $fieldlist = explode(',', $getlist);
