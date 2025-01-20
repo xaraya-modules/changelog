@@ -98,7 +98,7 @@ class ShowversionMethod extends MethodClass
             $data['hostname'] = '';
         }
         if (!empty($data['remark'])) {
-            $data['remark'] = xarVar::prepForDisplay($data['remark']);
+            $data['remark'] = $this->var()->prep($data['remark']);
         }
         // 2template $data['date'] = xarLocale::formatDate($data['date']);
 

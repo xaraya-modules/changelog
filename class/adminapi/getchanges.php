@@ -56,8 +56,8 @@ class GetchangesMethod extends MethodClass
             throw new BadParameterException($vars, $msg);
         }
 
-        $dbconn = xarDB::getConn();
-        $xartable = xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable = $this->db()->getTables();
         $changelogtable = $xartable['changelog'];
         $rolestable = $xartable['roles'];
 

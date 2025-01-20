@@ -70,8 +70,8 @@ class UpdateconfigMethod extends MethodClass
             if (defined('XARCORE_GENERATION') && XARCORE_GENERATION == 2) {
                 // FIXME: change hook order in 2.x core
             } else {
-                $dbconn = xarDB::getConn();
-                $xartable = xarDB::getTables();
+                $dbconn = $this->db()->getConn();
+                $xartable = $this->db()->getTables();
                 $query = "UPDATE $xartable[hooks]
                              SET xar_order = 999
                            WHERE xar_tmodule = 'changelog'";

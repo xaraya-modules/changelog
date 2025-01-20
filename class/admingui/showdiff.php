@@ -167,7 +167,7 @@ class ShowdiffMethod extends MethodClass
                 );
             }
             if (!empty($data['changes'][$logid]['remark'])) {
-                $data['changes'][$logid]['remark'] = xarVar::prepForDisplay($data['changes'][$logid]['remark']);
+                $data['changes'][$logid]['remark'] = $this->var()->prep($data['changes'][$logid]['remark']);
             }
             // 2template $data['changes'][$logid]['date'] = xarLocale::formatDate($data['changes'][$logid]['date']);
             $data['changes'][$logid]['version'] = $version[$logid];
@@ -309,8 +309,8 @@ class ShowdiffMethod extends MethodClass
                 $difference = $fmt->format($diff);
                 $data['fields'][$field]['diff'] = nl2br($difference);
             }
-            $data['fields'][$field]['old'] = nl2br(xarVar::prepForDisplay($old['fields'][$field]));
-            $data['fields'][$field]['new'] = nl2br(xarVar::prepForDisplay($new['fields'][$field]));
+            $data['fields'][$field]['old'] = nl2br($this->var()->prep($old['fields'][$field]));
+            $data['fields'][$field]['new'] = nl2br($this->var()->prep($new['fields'][$field]));
         }
 
         return $data;
