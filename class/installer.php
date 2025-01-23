@@ -65,8 +65,8 @@ class Installer extends InstallerClass
      */
     public function init()
     {
-        $dbconn = xarDB::getConn();
-        $xartable = xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable = $this->db()->getTables();
 
         $changelogtable = $xartable['changelog'];
 
@@ -128,7 +128,7 @@ class Installer extends InstallerClass
         }
 
         $index = [
-            'name'      => 'i_' . xarDB::getPrefix() . '_changelog_combo',
+            'name'      => 'i_' . $this->db()->getPrefix() . '_changelog_combo',
             'fields'    => ['xar_moduleid','xar_itemtype','xar_itemid'],
             'unique'    => false,
         ];
@@ -139,7 +139,7 @@ class Installer extends InstallerClass
         }
 
         $index = [
-            'name'      => 'i_' . xarDB::getPrefix() . '_changelog_editor',
+            'name'      => 'i_' . $this->db()->getPrefix() . '_changelog_editor',
             'fields'    => ['xar_editor'],
             'unique'    => false,
         ];
@@ -150,7 +150,7 @@ class Installer extends InstallerClass
         }
 
         $index = [
-            'name'      => 'i_' . xarDB::getPrefix() . '_changelog_status',
+            'name'      => 'i_' . $this->db()->getPrefix() . '_changelog_status',
             'fields'    => ['xar_status'],
             'unique'    => false,
         ];
@@ -439,8 +439,8 @@ class Installer extends InstallerClass
      */
     public function delete()
     {
-        $dbconn = xarDB::getConn();
-        $xartable = xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable = $this->db()->getTables();
 
         sys::import('xaraya.tableddl');
         xarTableDDL::init();

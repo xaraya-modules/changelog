@@ -20,13 +20,14 @@
  * @access private
  * @return array
  */
-function changelog_xartables()
+function changelog_xartables(?string $prefix = null)
 {
     // Initialise table array
     $xarTables = [];
+    $prefix ??= xarDB::getPrefix();
     // Get the name for the changelog item table.  This is not necessary
     // but helps in the following statements and keeps them readable
-    $changelogTable = xarDB::getPrefix() . '_changelog';
+    $changelogTable = $prefix . '_changelog';
     // Set the table name
     $xarTables['changelog'] = $changelogTable;
     // Return the table information
