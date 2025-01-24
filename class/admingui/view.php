@@ -93,14 +93,14 @@ class ViewMethod extends MethodClass
                     $moditem['numchanges'] = $stats['changes'];
                     if ($itemtype == 0) {
                         $moditem['name'] = ucwords($modinfo['displayname']);
-                        //    $moditem['link'] = xarController::URL($modinfo['name'],'user','main');
+                        //    $moditem['link'] = $this->ctl()->getModuleURL($modinfo['name'],'user','main');
                     } else {
                         if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                             $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                             //    $moditem['link'] = $mytypes[$itemtype]['url'];
                         } else {
                             $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                            //    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                            //    $moditem['link'] = $this->ctl()->getModuleURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                         }
                     }
                     $moditem['link'] = $this->mod()->getURL(
@@ -147,7 +147,7 @@ class ViewMethod extends MethodClass
                     //    $data['modlink'] = $mytypes[$itemtype]['url'];
                 } else {
                     $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                    //    $data['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                    //    $data['modlink'] = $this->ctl()->getModuleURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                 }
                 if (isset($modlist[$modid][$itemtype])) {
                     $stats = $modlist[$modid][$itemtype];

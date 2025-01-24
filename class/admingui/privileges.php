@@ -139,7 +139,7 @@ class PrivilegesMethod extends MethodClass
             }
 
             // redirect to the privilege
-            $this->ctl()->redirect(xarController::URL(
+            $this->ctl()->redirect($this->ctl()->getModuleURL(
                 'privileges',
                 'admin',
                 'modifyprivilege',

@@ -88,7 +88,7 @@ class ShowversionMethod extends MethodClass
             $data['showhost'] = 0;
         }
 
-        $data['profile'] = xarController::URL(
+        $data['profile'] = $this->ctl()->getModuleURL(
             'roles',
             'user',
             'display',

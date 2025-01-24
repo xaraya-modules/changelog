@@ -147,7 +147,7 @@ class ShowdiffMethod extends MethodClass
         }
 
         foreach (array_keys($data['changes']) as $logid) {
-            $data['changes'][$logid]['profile'] = xarController::URL(
+            $data['changes'][$logid]['profile'] = $this->ctl()->getModuleURL(
                 'roles',
                 'user',
                 'display',

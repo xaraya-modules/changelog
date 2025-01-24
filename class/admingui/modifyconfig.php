@@ -85,7 +85,7 @@ class ModifyconfigMethod extends MethodClass
                             $link = $mytypes[$itemtype]['url'];
                         } else {
                             $type = $this->ml('type #(1)', $itemtype);
-                            $link = xarController::URL($modname, 'user', 'view', ['itemtype' => $itemtype]);
+                            $link = $this->ctl()->getModuleURL($modname, 'user', 'view', ['itemtype' => $itemtype]);
                         }
                         if (xarModHooks::isHooked('dynamicdata', $modname, $itemtype)) {
                             if (!empty($withdd) && in_array("$modname.$itemtype", $withdd)) {
@@ -114,7 +114,7 @@ class ModifyconfigMethod extends MethodClass
                     } else {
                         $includedd = 0;
                     }
-                    $link = xarController::URL($modname, 'user', 'main');
+                    $link = $this->ctl()->getModuleURL($modname, 'user', 'main');
                     $data['settings'][$modname] = ['label' => $this->ml('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                         'changelog' => $changelog,
                         'includedd' => $includedd];
