@@ -38,6 +38,7 @@ class ModifyconfigMethod extends MethodClass
      * @author mikespub
      * @access public
      * @return array|true|void on success or void on failure
+     * @see AdminGui::modifyconfig()
      */
     public function __invoke(array $args = [])
     {

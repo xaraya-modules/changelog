@@ -13,6 +13,7 @@ namespace Xaraya\Modules\ChangeLog\AdminGui;
 
 
 use Xaraya\Modules\ChangeLog\AdminGui;
+use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarVar;
 use xarSecurity;
@@ -37,10 +38,13 @@ class ShowversionMethod extends MethodClass
 
     /**
      * show a particular version of a module item (or restore it if possible)
+     * @see AdminGui::showversion()
      */
     public function __invoke(array $args = [])
     {
         extract($args);
+        /** @var AdminApi $adminapi */
+        $adminapi = $this->adminapi();
 
         // TODO: add more restore options
         // List of currently supported restore modules (see API calls below)
@@ -69,11 +73,7 @@ class ShowversionMethod extends MethodClass
             return;
         }
 
-        $data = xarMod::apiFunc(
-            'changelog',
-            'admin',
-            'getversion',
-            ['modid' => $modid,
+        $data = $adminapi->getversion(['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'logid' => $logid]
@@ -269,11 +269,7 @@ class ShowversionMethod extends MethodClass
         }
 
         // get all changes
-        $changes = xarMod::apiFunc(
-            'changelog',
-            'admin',
-            'getchanges',
-            ['modid' => $modid,
+        $changes = $adminapi->getchanges(['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid]
         );

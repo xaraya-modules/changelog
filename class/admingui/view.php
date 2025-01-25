@@ -13,6 +13,7 @@ namespace Xaraya\Modules\ChangeLog\AdminGui;
 
 
 use Xaraya\Modules\ChangeLog\AdminGui;
+use Xaraya\Modules\ChangeLog\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarSecurity;
 use xarVar;
@@ -34,9 +35,12 @@ class ViewMethod extends MethodClass
 
     /**
      * View changelog entries
+     * @see AdminGui::view()
      */
     public function __invoke(array $args = [])
     {
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
         // Security Check
         if (!$this->sec()->checkAccess('AdminChangeLog')) {
             return;
@@ -68,11 +72,7 @@ class ViewMethod extends MethodClass
         $data = [];
         $data['editor'] = $editor;
 
-        $modlist = xarMod::apiFunc(
-            'changelog',
-            'user',
-            'getmodules',
-            ['editor' => $editor]
+        $modlist = $userapi->getmodules(['editor' => $editor]
         );
 
         if (empty($modid)) {
@@ -179,11 +179,7 @@ class ViewMethod extends MethodClass
             $data['itemsperpage'] = $numstats;
 
             $data['modid'] = $modid;
-            $getitems = xarMod::apiFunc(
-                'changelog',
-                'user',
-                'getitems',
-                ['modid' => $modid,
+            $getitems = $userapi->getitems(['modid' => $modid,
                     'itemtype' => $itemtype,
                     'editor' => $editor,
                     'numitems' => $numstats,

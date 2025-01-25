@@ -13,6 +13,7 @@ namespace Xaraya\Modules\ChangeLog\AdminGui;
 
 
 use Xaraya\Modules\ChangeLog\AdminGui;
+use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\ChangeLog\DiffLib;
 use Xaraya\Modules\MethodClass;
 use xarVar;
@@ -37,10 +38,13 @@ class ShowdiffMethod extends MethodClass
 
     /**
      * show the differences between 2 versions of a module item
+     * @see AdminGui::showdiff()
      */
     public function __invoke(array $args = [])
     {
         extract($args);
+        /** @var AdminApi $adminapi */
+        $adminapi = $this->adminapi();
 
         if (!$this->var()->find('modid', $modid)) {
             return;
@@ -61,11 +65,7 @@ class ShowdiffMethod extends MethodClass
         }
 
         // get all changes
-        $changes = xarMod::apiFunc(
-            'changelog',
-            'admin',
-            'getchanges',
-            ['modid' => $modid,
+        $changes = $adminapi->getchanges(['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid]
         );
@@ -212,11 +212,7 @@ class ShowdiffMethod extends MethodClass
             $fieldlist = explode(',', $getlist);
         }
 
-        $old = xarMod::apiFunc(
-            'changelog',
-            'admin',
-            'getversion',
-            ['modid' => $modid,
+        $old = $adminapi->getversion(['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'logid' => $oldid]
@@ -250,11 +246,7 @@ class ShowdiffMethod extends MethodClass
             $old['fields'] = [];
         }
 
-        $new = xarMod::apiFunc(
-            'changelog',
-            'admin',
-            'getversion',
-            ['modid' => $modid,
+        $new = $adminapi->getversion(['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'logid' => $newid]

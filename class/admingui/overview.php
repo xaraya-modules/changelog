@@ -31,6 +31,7 @@ class OverviewMethod extends MethodClass
 
     /**
      * Overview function that displays the standard Overview page
+     * @see AdminGui::overview()
      */
     public function __invoke(array $args = [])
     {

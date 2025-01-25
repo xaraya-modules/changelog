@@ -33,6 +33,7 @@ class HooksMethod extends MethodClass
      * @author the Changelog module development team
      * @return array|void xarTpl::module with $data containing template data
      * @since 4 March 2006
+     * @see AdminGui::hooks()
      */
     public function __invoke(array $args = [])
     {

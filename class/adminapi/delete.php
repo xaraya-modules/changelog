@@ -38,6 +38,7 @@ class DeleteMethod extends MethodClass
      * @var mixed $itemid int item id
      * @var mixed $editor optional editor of the changelog entries
      * @return bool|void true on success, false on failure
+     * @see AdminApi::delete()
      */
     public function __invoke(array $args = [])
     {

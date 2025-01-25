@@ -42,6 +42,7 @@ class GetitemsMethod extends MethodClass
      *     $args['numitems'] number of items to return
      *     $args['startnum'] start at this number (1-based)
      * @return array|null $array[$itemid] = $changes;
+     * @see UserApi::getitems()
      */
     public function __invoke(array $args = [])
     {

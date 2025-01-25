@@ -37,6 +37,7 @@ class GetchangesMethod extends MethodClass
      * @var mixed $numitems number of entries to retrieve (optional)
      * @var mixed $startnum starting number (optional)
      * @return array|void of changes
+     * @see AdminApi::getchanges()
      */
     public function __invoke(array $args = [])
     {

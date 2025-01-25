@@ -13,6 +13,7 @@ namespace Xaraya\Modules\ChangeLog\AdminGui;
 
 
 use Xaraya\Modules\ChangeLog\AdminGui;
+use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarVar;
 use xarSecurity;
@@ -34,10 +35,13 @@ class ShowlogMethod extends MethodClass
 
     /**
      * show the change log for a module item
+     * @see AdminGui::showlog()
      */
     public function __invoke(array $args = [])
     {
         extract($args);
+        /** @var AdminApi $adminapi */
+        $adminapi = $this->adminapi();
 
         if (!$this->var()->find('modid', $modid)) {
             return;
@@ -54,11 +58,7 @@ class ShowlogMethod extends MethodClass
         }
 
         $data = [];
-        $data['changes'] = xarMod::apiFunc(
-            'changelog',
-            'admin',
-            'getchanges',
-            ['modid' => $modid,
+        $data['changes'] = $adminapi->getchanges(['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid]
         );

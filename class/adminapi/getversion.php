@@ -36,6 +36,7 @@ class GetversionMethod extends MethodClass
      * @var mixed $itemid item id
      * @var mixed $logid log id
      * @return array|void of changes
+     * @see AdminApi::getversion()
      */
     public function __invoke(array $args = [])
     {

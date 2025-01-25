@@ -34,6 +34,7 @@ class GetmodulesMethod extends MethodClass
      * @param array<mixed> $args
      * @var mixed $editor optional editor of the changelog entries
      * @return array|null $array[$modid][$itemtype] = array('items' => $numitems,'changes' => $numchanges);
+     * @see UserApi::getmodules()
      */
     public function __invoke(array $args = [])
     {

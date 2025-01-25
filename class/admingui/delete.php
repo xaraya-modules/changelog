@@ -13,6 +13,7 @@ namespace Xaraya\Modules\ChangeLog\AdminGui;
 
 
 use Xaraya\Modules\ChangeLog\AdminGui;
+use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarSecurity;
 use xarVar;
@@ -34,9 +35,12 @@ class DeleteMethod extends MethodClass
 
     /**
      * Delete changelog entries of module items
+     * @see AdminGui::delete()
      */
     public function __invoke(array $args = [])
     {
+        /** @var AdminApi $adminapi */
+        $adminapi = $this->adminapi();
         // Security Check
         if (!$this->sec()->checkAccess('AdminChangeLog')) {
             return;
@@ -100,11 +104,7 @@ class DeleteMethod extends MethodClass
         return $this->ml('This feature is currently disabled for security reasons');
 
         /**
-        if (!xarMod::apiFunc(
-            'changelog',
-            'admin',
-            'delete',
-            ['modid' => $modid,
+        if (!$adminapi->delete(['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'editor' => $editor,
