@@ -47,9 +47,9 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
      */
     public function notify(ixarEventSubject $subject)
     {
+        $this->setContext($subject->getContext());
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
-        //$context = $subject->getContext();
 
         // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
         $modname = $extrainfo['module'];
@@ -58,8 +58,8 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
         $modid = $extrainfo['module_id'];
 
         xarMod::loadDbInfo('changelog', 'changelog');
-        $dbconn = xarDB::getConn();
-        $xartable = xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable = $this->db()->getTables();
         $changelogtable = $xartable['changelog'];
 
         $editor = xarUser::getVar('id');
@@ -74,17 +74,17 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
         if (isset($extrainfo['changelog_remark']) && is_string($extrainfo['changelog_remark'])) {
             $remark = $extrainfo['changelog_remark'];
         } else {
-            xarVar::fetch('changelog_remark', 'str:1:', $remark, null, xarVar::NOT_REQUIRED);
+            $this->var()->find('changelog_remark', $remark, 'str:1:');
             if (empty($remark)) {
                 $remark = '';
             }
         }
 
         if (!empty($itemtype)) {
-            $getlist = xarModVars::get('changelog', $modname . '.' . $itemtype);
+            $getlist = $this->mod()->getVar($modname . '.' . $itemtype);
         }
         if (!isset($getlist)) {
-            $getlist = xarModVars::get('changelog', $modname);
+            $getlist = $this->mod()->getVar($modname);
         }
         if (!empty($getlist)) {
             $fieldlist = explode(',', $getlist);
@@ -103,7 +103,7 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
             $fields[$field] = $value;
         }
         // Check if we need to include any DD fields
-        $withdd = xarModVars::get('changelog', 'withdd');
+        $withdd = $this->mod()->getVar('withdd');
         if (empty($withdd)) {
             $withdd = '';
         }
@@ -111,9 +111,9 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
         if (xarModHooks::isHooked('dynamicdata', $modname, $itemtype) && !empty($withdd) &&
             (in_array($modname, $withdd) || in_array("$modname.$itemtype", $withdd))) {
             // Note: we need to make sure the DD hook is called before the changelog hook here
-            $ddfields = xarMod::apiFunc(
+            $ddfields = $this->mod()->apiMethod(
                 'dynamicdata',
-                'user',
+                'userapi',
                 'getitem',
                 ['module_id' => $modid,
                     'itemtype' => $itemtype,

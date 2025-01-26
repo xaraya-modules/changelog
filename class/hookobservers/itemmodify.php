@@ -44,9 +44,9 @@ class ItemModifyObserver extends HookObserver implements ixarHookObserver
      */
     public function notify(ixarEventSubject $subject)
     {
+        $this->setContext($subject->getContext());
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
-        $context = $subject->getContext();
 
         // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
         $modname = $extrainfo['module'];
@@ -62,15 +62,14 @@ class ItemModifyObserver extends HookObserver implements ixarHookObserver
         if (!empty($extrainfo['changelog_remark'])) {
             $remark = $extrainfo['changelog_remark'];
         } else {
-            xarVar::fetch('changelog_remark', 'str:1:', $remark, null, xarVar::NOT_REQUIRED);
+            $this->var()->find('changelog_remark', $remark, 'str:1:');
             if (empty($remark)) {
                 $remark = '';
             }
         }
 
         if (xarSecurity::check('ReadChangeLog', 0, 'Item', "$modid:$itemtype:$itemid")) {
-            $link = xarController::URL(
-                'changelog',
+            $link = $this->mod()->getURL(
                 'admin',
                 'showlog',
                 ['modid' => $modid,
@@ -81,12 +80,10 @@ class ItemModifyObserver extends HookObserver implements ixarHookObserver
             $link = '';
         }
 
-        return xarTpl::module(
-            'changelog',
-            'admin',
+        return $this->mod()->template(
             'modifyhook',
             ['remark' => $remark,
-                'context' => $context,
+                'context' => $this->getContext(),
                 'link' => $link]
         );
     }

@@ -44,9 +44,9 @@ class ItemDeleteObserver extends HookObserver implements ixarHookObserver
      */
     public function notify(ixarEventSubject $subject)
     {
+        $this->setContext($subject->getContext());
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
-        //$context = $subject->getContext();
 
         // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
         $modname = $extrainfo['module'];
@@ -60,8 +60,8 @@ class ItemDeleteObserver extends HookObserver implements ixarHookObserver
         }
 
         xarMod::loadDbInfo('changelog', 'changelog');
-        $dbconn = xarDB::getConn();
-        $xartable = xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable = $this->db()->getTables();
         $changelogtable = $xartable['changelog'];
 
         $editor = xarUser::getVar('id');
@@ -77,7 +77,7 @@ class ItemDeleteObserver extends HookObserver implements ixarHookObserver
             if (isset($extrainfo['changelog_remark']) && is_string($extrainfo['changelog_remark'])) {
                 $remark = $extrainfo['changelog_remark'];
             } else {
-                xarVar::fetch('changelog_remark', 'str:1:', $remark, NULL, xarVar::NOT_REQUIRED);
+                $this->var()->find('changelog_remark', $remark, 'str:1:');
                 if (empty($remark)){
                     $remark = '';
                 }

@@ -38,15 +38,16 @@ sys::import('xaraya.structures.hooks.observer');
 class ItemDisplayObserver extends HookObserver implements ixarHookObserver
 {
     public $module = 'changelog';
+    public $type = 'user';
 
     /**
      * @param ixarHookSubject $subject
      */
     public function notify(ixarEventSubject $subject)
     {
+        $this->setContext($subject->getContext());
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
-        $context = $subject->getContext();
 
         // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
         $modname = $extrainfo['module'];
@@ -54,15 +55,14 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
         $itemid = $extrainfo['itemid'];
         $modid = $extrainfo['module_id'];
 
-        $changes = xarMod::apiFunc(
+        $changes = $this->mod()->apiMethod(
             'changelog',
-            'admin',
+            'adminapi',
             'getchanges',
             ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
-                'numitems' => 1],
-            $context
+                'numitems' => 1]
         );
         // return empty string here
         if (empty($changes) || !is_array($changes) || count($changes) == 0) {
@@ -71,13 +71,13 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
 
         $data = array_pop($changes);
 
-        if (xarSecurity::check('AdminChangeLog', 0)) {
+        if ($this->sec()->checkAccess('AdminChangeLog', 0)) {
             $data['showhost'] = 1;
         } else {
             $data['showhost'] = 0;
         }
 
-        $data['profile'] = xarController::URL(
+        $data['profile'] = $this->ctl()->getModuleURL(
             'roles',
             'user',
             'display',
@@ -87,22 +87,19 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
             $data['hostname'] = '';
         }
         if (!empty($data['remark'])) {
-            $data['remark'] = xarVar::prepForDisplay($data['remark']);
+            $data['remark'] = $this->var()->prep($data['remark']);
         }
-        $data['link'] = xarController::URL(
-            'changelog',
+        $data['link'] = $this->mod()->getURL(
             'admin',
             'showlog',
             ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid]
         );
-        $data['context'] = $context;
+        $data['context'] = $this->getContext();
 
         // TODO: use custom template per module + itemtype ?
-        return xarTpl::module(
-            'changelog',
-            'user',
+        return $this->mod()->template(
             'displayhook',
             $data
         );
