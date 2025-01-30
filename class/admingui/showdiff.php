@@ -181,12 +181,12 @@ class ShowdiffMethod extends MethodClass
                 'itemid' => $itemid]
         );
 
-        $modinfo = xarMod::getInfo($modid);
+        $modinfo = $this->mod()->getInfo($modid);
         if (empty($modinfo['name'])) {
             return $data;
         }
         try {
-            $itemlinks = xarMod::apiFunc(
+            $itemlinks = $this->mod()->apiFunc(
                 $modinfo['name'],
                 'user',
                 'getitemlinks',

@@ -60,7 +60,7 @@ class ModuleRemoveObserver extends HookObserver implements ixarHookObserver
             throw new BadParameterException($vars, $msg);
         }
 
-        $modid = $this->mod()->getRegId($objectid);
+        $modid = $this->mod()->getRegID($objectid);
         if (empty($modid)) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
             $vars = ['module id', 'admin', 'removehook', 'changelog'];

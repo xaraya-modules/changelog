@@ -56,14 +56,14 @@ class GetitemsMethod extends MethodClass
             throw new BadParameterException($vars, $msg);
         }
         if (!empty($modname)) {
-            $modid = xarMod::getRegId($modname);
+            $modid = $this->mod()->getRegID($modname);
         }
         if (empty($modid)) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
             $vars = ['module', 'user', 'getitems', 'changelog'];
             throw new BadParameterException($vars, $msg);
         } elseif (empty($modname)) {
-            $modinfo = xarMod::getInfo($modid);
+            $modinfo = $this->mod()->getInfo($modid);
             $modname = $modinfo['name'];
         }
         if (empty($itemtype)) {

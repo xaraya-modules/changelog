@@ -112,7 +112,7 @@ class ShowversionMethod extends MethodClass
 
         $data['fields'] = [];
 
-        $modinfo = xarMod::getInfo($modid);
+        $modinfo = $this->mod()->getInfo($modid);
         if (empty($modinfo['name'])) {
             return $data;
         }
@@ -140,7 +140,7 @@ class ShowversionMethod extends MethodClass
         }
 
         try {
-            $itemlinks = xarMod::apiFunc(
+            $itemlinks = $this->mod()->apiFunc(
                 $modinfo['name'],
                 'user',
                 'getitemlinks',
@@ -208,7 +208,7 @@ class ShowversionMethod extends MethodClass
                                     }
                     */
                     // Call the update API function
-                    $result = xarMod::apiFunc(
+                    $result = $this->mod()->apiFunc(
                         'articles',
                         'admin',
                         'update',
@@ -221,7 +221,7 @@ class ShowversionMethod extends MethodClass
 
                 case 'dynamicdata':
                     // Call the update API function
-                    $result = xarMod::apiFunc(
+                    $result = $this->mod()->apiFunc(
                         'dynamicdata',
                         'admin',
                         'update',
@@ -241,7 +241,7 @@ class ShowversionMethod extends MethodClass
                         $data['fields']['pid'] = $itemid;
                     }
                     // Call the update API function
-                    $result = xarMod::apiFunc(
+                    $result = $this->mod()->apiFunc(
                         'xarpages',
                         'admin',
                         'updatepage',

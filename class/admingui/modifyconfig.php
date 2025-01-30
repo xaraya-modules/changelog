@@ -60,7 +60,7 @@ class ModifyconfigMethod extends MethodClass
         }
         $withdd = explode(';', $withdd);
 
-        $hookedmodules = xarMod::apiFunc(
+        $hookedmodules = $this->mod()->apiFunc(
             'modules',
             'admin',
             'gethookedmodules',
@@ -72,7 +72,7 @@ class ModifyconfigMethod extends MethodClass
                 if (!isset($value[0])) {
                     // Get the list of all item types for this module (if any)
                     try {
-                        $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes');
+                        $mytypes = $this->mod()->apiFunc($modname, 'user', 'getitemtypes');
                     } catch (Exception $e) {
                         $mytypes = [];
                     }
@@ -88,7 +88,7 @@ class ModifyconfigMethod extends MethodClass
                             $type = $this->ml('type #(1)', $itemtype);
                             $link = $this->ctl()->getModuleURL($modname, 'user', 'view', ['itemtype' => $itemtype]);
                         }
-                        if (xarModHooks::isHooked('dynamicdata', $modname, $itemtype)) {
+                        if ($this->mod()->isHooked('dynamicdata', $modname, $itemtype)) {
                             if (!empty($withdd) && in_array("$modname.$itemtype", $withdd)) {
                                 $includedd = 2;
                             } else {
@@ -106,7 +106,7 @@ class ModifyconfigMethod extends MethodClass
                     if (empty($changelog)) {
                         $changelog = '';
                     }
-                    if (xarModHooks::isHooked('dynamicdata', $modname)) {
+                    if ($this->mod()->isHooked('dynamicdata', $modname)) {
                         if (!empty($withdd) && in_array($modname, $withdd)) {
                             $includedd = 2;
                         } else {

@@ -94,7 +94,7 @@ class PrivilegesMethod extends MethodClass
         }
 
         // Get the list of all modules currently hooked to categories
-        $hookedmodlist = xarMod::apiFunc(
+        $hookedmodlist = $this->mod()->apiFunc(
             'modules',
             'admin',
             'gethookedmodules',
@@ -108,11 +108,11 @@ class PrivilegesMethod extends MethodClass
             if (empty($modname)) {
                 continue;
             }
-            $modid = xarMod::getRegId($modname);
+            $modid = $this->mod()->getRegID($modname);
             if (empty($modid)) {
                 continue;
             }
-            $modinfo = xarMod::getInfo($modid);
+            $modinfo = $this->mod()->getInfo($modid);
             $modlist[$modid] = $modinfo['displayname'];
         }
 
@@ -151,7 +151,7 @@ class PrivilegesMethod extends MethodClass
 
         /*
             if (!empty($moduleid)) {
-                $numitems = xarMod::apiFunc('categories','user','countitems',
+                $numitems = $this->mod()->apiFunc('categories','user','countitems',
                                           array('modid' => $moduleid,
                                                 'cids'  => (empty($cid) ? null : array($cid))
                                                ));
