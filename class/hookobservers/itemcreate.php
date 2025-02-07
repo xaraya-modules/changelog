@@ -108,7 +108,7 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
             $withdd = '';
         }
         $withdd = explode(';', $withdd);
-        if (xarModHooks::isHooked('dynamicdata', $modname, $itemtype) && !empty($withdd) &&
+        if (xarHooks::isAttached('dynamicdata', $modname, $itemtype) && !empty($withdd) &&
             (in_array($modname, $withdd) || in_array("$modname.$itemtype", $withdd))) {
             // Note: we need to make sure the DD hook is called before the changelog hook here
             $ddfields = $this->mod()->apiMethod(
