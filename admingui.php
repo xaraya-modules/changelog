@@ -15,7 +15,7 @@ use Xaraya\Modules\AdminGuiClass;
 use sys;
 
 sys::import('xaraya.modules.admingui');
-sys::import('modules.changelog.class.adminapi');
+sys::import('modules.changelog.adminapi');
 
 /**
  * Handle the changelog admin GUI
