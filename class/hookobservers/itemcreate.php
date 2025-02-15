@@ -21,7 +21,7 @@ use ixarEventSubject;
 use ixarHookSubject;
 use xarMod;
 use xarModVars;
-use xarModHooks;
+use xarHooks;
 use xarDB;
 use xarUser;
 use xarServer;

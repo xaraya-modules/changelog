@@ -26,7 +26,7 @@ use xarUser;
 use xarServer;
 use xarVar;
 use xarModVars;
-use xarModHooks;
+use xarHooks;
 use sys;
 
 sys::import('xaraya.structures.hooks.observer');
