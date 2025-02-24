@@ -458,7 +458,7 @@ class Installer extends InstallerClass
         }
 
         // Delete any module variables
-        xarModVars::delete('changelog', 'SupportShortURLs');
+        $this->mod('changelog')->delVar('SupportShortURLs');
 
         // Remove module hooks
         //$this->delete_old_hooks();

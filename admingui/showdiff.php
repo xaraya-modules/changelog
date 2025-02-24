@@ -46,19 +46,11 @@ class ShowdiffMethod extends MethodClass
         /** @var AdminApi $adminapi */
         $adminapi = $this->adminapi();
 
-        if (!$this->var()->find('modid', $modid)) {
-            return;
-        }
-        if (!$this->var()->find('itemtype', $itemtype)) {
-            return;
-        }
-        if (!$this->var()->find('itemid', $itemid)) {
-            return;
-        }
+        $this->var()->find('modid', $modid);
+        $this->var()->find('itemtype', $itemtype);
+        $this->var()->find('itemid', $itemid);
         // Note : this is an array or a string here
-        if (!$this->var()->find('logids', $logids)) {
-            return;
-        }
+        $this->var()->find('logids', $logids);
 
         if (!xarSecurity::check('AdminChangeLog', 1, 'Item', "$modid:$itemtype:$itemid")) {
             return;

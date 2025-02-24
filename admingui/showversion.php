@@ -50,24 +50,12 @@ class ShowversionMethod extends MethodClass
         // List of currently supported restore modules (see API calls below)
         $supported = ['articles', 'dynamicdata', 'xarpages'];
 
-        if (!$this->var()->find('modid', $modid)) {
-            return;
-        }
-        if (!$this->var()->find('itemtype', $itemtype)) {
-            return;
-        }
-        if (!$this->var()->find('itemid', $itemid)) {
-            return;
-        }
-        if (!$this->var()->find('logid', $logid)) {
-            return;
-        }
-        if (!$this->var()->find('restore', $restore)) {
-            return;
-        }
-        if (!$this->var()->find('confirm', $confirm)) {
-            return;
-        }
+        $this->var()->find('modid', $modid);
+        $this->var()->find('itemtype', $itemtype);
+        $this->var()->find('itemid', $itemid);
+        $this->var()->find('logid', $logid);
+        $this->var()->find('restore', $restore);
+        $this->var()->find('confirm', $confirm);
 
         if (!xarSecurity::check('AdminChangeLog', 1, 'Item', "$modid:$itemtype:$itemid")) {
             return;

@@ -40,12 +40,8 @@ class UpdateconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Get parameters
-        if (!$this->var()->find('changelog', $changelog)) {
-            return;
-        }
-        if (!$this->var()->find('includedd', $includedd)) {
-            return;
-        }
+        $this->var()->find('changelog', $changelog);
+        $this->var()->find('includedd', $includedd);
 
         // Confirm authorisation code
         if (!$this->sec()->confirmAuthKey()) {
@@ -86,12 +82,8 @@ class UpdateconfigMethod extends MethodClass
         }
         $this->mod()->setVar('withdd', $withdd);
 
-        if (!$this->var()->find('numstats', $numstats, 'int', 100)) {
-            return;
-        }
-        if (!$this->var()->find('showtitle', $showtitle, 'checkbox', false)) {
-            return;
-        }
+        $this->var()->find('numstats', $numstats, 'int', 100);
+        $this->var()->find('showtitle', $showtitle, 'checkbox', false);
         $this->mod()->setVar('numstats', $numstats);
         $this->mod()->setVar('showtitle', $showtitle);
 

@@ -46,24 +46,12 @@ class ViewMethod extends MethodClass
             return;
         }
 
-        if (!$this->var()->check('modid', $modid)) {
-            return;
-        }
-        if (!$this->var()->check('itemtype', $itemtype)) {
-            return;
-        }
-        if (!$this->var()->check('itemid', $itemid)) {
-            return;
-        }
-        if (!$this->var()->check('sort', $sort)) {
-            return;
-        }
-        if (!$this->var()->find('startnum', $startnum, 'isset', 1)) {
-            return;
-        }
-        if (!$this->var()->check('editor', $editor)) {
-            return;
-        }
+        $this->var()->check('modid', $modid);
+        $this->var()->check('itemtype', $itemtype);
+        $this->var()->check('itemid', $itemid);
+        $this->var()->check('sort', $sort);
+        $this->var()->find('startnum', $startnum, 'isset', 1);
+        $this->var()->check('editor', $editor);
 
         if (empty($editor) || !is_numeric($editor)) {
             $editor = null;
