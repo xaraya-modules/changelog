@@ -62,12 +62,12 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
         $xartable = $this->db()->getTables();
         $changelogtable = $xartable['changelog'];
 
-        $editor = xarUser::getVar('id');
-        $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
+        $editor = $this->user()->getId();
+        $forwarded = $this->ctl()->getServerVar('HTTP_X_FORWARDED_FOR');
         if (!empty($forwarded)) {
             $hostname = preg_replace('/,.*/', '', $forwarded);
         } else {
-            $hostname = xarServer::getVar('REMOTE_ADDR');
+            $hostname = $this->ctl()->getServerVar('REMOTE_ADDR');
         }
         $date = time();
         $status = 'created';

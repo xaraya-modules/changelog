@@ -88,7 +88,7 @@ class ShowversionMethod extends MethodClass
         if (!empty($data['remark'])) {
             $data['remark'] = $this->var()->prep($data['remark']);
         }
-        // 2template $data['date'] = xarLocale::formatDate($data['date']);
+        // 2template $data['date'] = $this->mls()->formatDate($data['date']);
 
         $data['link'] = $this->mod()->getURL(
             'admin',

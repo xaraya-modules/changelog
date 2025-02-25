@@ -161,7 +161,7 @@ class ShowdiffMethod extends MethodClass
             if (!empty($data['changes'][$logid]['remark'])) {
                 $data['changes'][$logid]['remark'] = $this->var()->prep($data['changes'][$logid]['remark']);
             }
-            // 2template $data['changes'][$logid]['date'] = xarLocale::formatDate($data['changes'][$logid]['date']);
+            // 2template $data['changes'][$logid]['date'] = $this->mls()->formatDate($data['changes'][$logid]['date']);
             $data['changes'][$logid]['version'] = $version[$logid];
         }
 
