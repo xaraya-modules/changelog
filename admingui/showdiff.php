@@ -52,7 +52,7 @@ class ShowdiffMethod extends MethodClass
         // Note : this is an array or a string here
         $this->var()->find('logids', $logids);
 
-        if (!xarSecurity::check('AdminChangeLog', 1, 'Item', "$modid:$itemtype:$itemid")) {
+        if (!$this->sec()->check('AdminChangeLog', 1, 'Item', "$modid:$itemtype:$itemid")) {
             return;
         }
 

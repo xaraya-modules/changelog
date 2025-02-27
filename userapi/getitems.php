@@ -81,7 +81,7 @@ class GetitemsMethod extends MethodClass
         }
 
         // Security Check
-        if (!xarSecurity::check('ReadChangeLog', 1, "$modid:$itemtype:All")) {
+        if (!$this->sec()->check('ReadChangeLog', 1, "$modid:$itemtype:All")) {
             return;
         }
 

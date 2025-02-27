@@ -68,7 +68,7 @@ class ItemModifyObserver extends HookObserver implements ixarHookObserver
             }
         }
 
-        if (xarSecurity::check('ReadChangeLog', 0, 'Item', "$modid:$itemtype:$itemid")) {
+        if ($this->sec()->check('ReadChangeLog', 0, 'Item', "$modid:$itemtype:$itemid")) {
             $link = $this->mod()->getURL(
                 'admin',
                 'showlog',

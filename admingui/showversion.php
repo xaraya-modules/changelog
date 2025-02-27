@@ -57,7 +57,7 @@ class ShowversionMethod extends MethodClass
         $this->var()->find('restore', $restore);
         $this->var()->find('confirm', $confirm);
 
-        if (!xarSecurity::check('AdminChangeLog', 1, 'Item', "$modid:$itemtype:$itemid")) {
+        if (!$this->sec()->check('AdminChangeLog', 1, 'Item', "$modid:$itemtype:$itemid")) {
             return;
         }
 

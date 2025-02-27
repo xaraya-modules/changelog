@@ -47,7 +47,7 @@ class ShowlogMethod extends MethodClass
         $this->var()->find('itemtype', $itemtype);
         $this->var()->find('itemid', $itemid);
 
-        if (!xarSecurity::check('ReadChangeLog', 1, 'Item', "$modid:$itemtype:$itemid")) {
+        if (!$this->sec()->check('ReadChangeLog', 1, 'Item', "$modid:$itemtype:$itemid")) {
             return;
         }
 
