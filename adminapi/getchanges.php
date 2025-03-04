@@ -93,7 +93,7 @@ class GetchangesMethod extends MethodClass
         }
 
         $changes = [];
-        while (!$result->EOF) {
+        while ($result->next()) {
             $change = [];
             [$change['logid'],
                 $change['editor'],
@@ -103,7 +103,6 @@ class GetchangesMethod extends MethodClass
                 $change['remark'],
                 $change['editorname']] = $result->fields;
             $changes[$change['logid']] = $change;
-            $result->MoveNext();
         }
         $result->Close();
 

@@ -91,7 +91,7 @@ class GetversionMethod extends MethodClass
         }
 
         $version = [];
-        if ($result->EOF) {
+        if (!$result->first()) {
             return $version;
         }
         [$version['logid'],

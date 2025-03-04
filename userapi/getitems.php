@@ -124,10 +124,9 @@ class GetitemsMethod extends MethodClass
         }
 
         $hitlist = [];
-        while (!$result->EOF) {
+        while ($result->next()) {
             [$id, $changes] = $result->fields;
             $hitlist[$id] = $changes;
-            $result->MoveNext();
         }
         $result->close();
 
