@@ -14,9 +14,7 @@ namespace Xaraya\Modules\ChangeLog\AdminGui;
 
 use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\MethodClass;
-use xarSecurity;
 use sys;
-use BadParameterException;
 
 sys::import('xaraya.modules.method');
 

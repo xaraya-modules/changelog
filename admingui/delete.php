@@ -15,11 +15,6 @@ namespace Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
-use xarSecurity;
-use xarVar;
-use xarMod;
-use xarSec;
-use xarController;
 use sys;
 use Exception;
 

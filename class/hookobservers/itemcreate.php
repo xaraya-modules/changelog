@@ -20,12 +20,7 @@ use ixarHookObserver;
 use ixarEventSubject;
 use ixarHookSubject;
 use xarMod;
-use xarModVars;
 use xarHooks;
-use xarDB;
-use xarUser;
-use xarServer;
-use xarVar;
 use sys;
 
 sys::import('xaraya.structures.hooks.observer');

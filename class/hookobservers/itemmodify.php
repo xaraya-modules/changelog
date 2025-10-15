@@ -20,10 +20,6 @@ use ixarHookObserver;
 use ixarEventSubject;
 use ixarHookSubject;
 use BadParameterException;
-use xarVar;
-use xarSecurity;
-use xarController;
-use xarTpl;
 use sys;
 
 sys::import('xaraya.structures.hooks.observer');

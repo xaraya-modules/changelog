@@ -19,11 +19,6 @@ use HookObserver;
 use ixarHookObserver;
 use ixarEventSubject;
 use ixarHookSubject;
-use xarMod;
-use xarVar;
-use xarSecurity;
-use xarController;
-use xarTpl;
 use sys;
 
 sys::import('xaraya.structures.hooks.observer');

@@ -21,11 +21,6 @@ use ixarEventSubject;
 use ixarHookSubject;
 use BadParameterException;
 use xarMod;
-use xarDB;
-use xarUser;
-use xarServer;
-use xarVar;
-use xarModVars;
 use xarHooks;
 use sys;
 

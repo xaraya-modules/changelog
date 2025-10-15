@@ -14,8 +14,6 @@ namespace Xaraya\Modules\ChangeLog\AdminApi;
 
 use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
-use xarSecurity;
-use xarDB;
 use sys;
 use BadParameterException;
 

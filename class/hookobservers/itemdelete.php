@@ -21,9 +21,6 @@ use ixarEventSubject;
 use ixarHookSubject;
 use BadParameterException;
 use xarMod;
-use xarDB;
-use xarUser;
-use xarServer;
 use sys;
 
 sys::import('xaraya.structures.hooks.observer');

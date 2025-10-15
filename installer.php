@@ -14,11 +14,8 @@
 namespace Xaraya\Modules\ChangeLog;
 
 use Xaraya\Modules\InstallerClass;
-use xarDB;
 use xarTableDDL;
 use xarMod;
-use xarModVars;
-use xarController;
 use xarPrivileges;
 use xarMasks;
 use xarModHooks;
