@@ -15,8 +15,6 @@
 
 namespace Xaraya\Modules\ChangeLog;
 
-use xarDB;
-
 class Tables
 {
     /**
@@ -28,11 +26,10 @@ class Tables
      * @access private
      * @return array
      */
-    public function __invoke(?string $prefix = null)
+    public function __invoke(string $prefix = 'xar')
     {
         // Initialise table array
         $xarTables = [];
-        $prefix ??= xarDB::getPrefix();
         // Get the name for the changelog item table.  This is not necessary
         // but helps in the following statements and keeps them readable
         $changelogTable = $prefix . '_changelog';
