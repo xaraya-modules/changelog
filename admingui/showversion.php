@@ -79,7 +79,7 @@ class ShowversionMethod extends MethodClass
             $data['hostname'] = '';
         }
         if (!empty($data['remark'])) {
-            $data['remark'] = $this->var()->prep($data['remark']);
+            $data['remark'] = \xarVarPrep::forDisplay($data['remark']);
         }
         // 2template $data['date'] = $this->mls()->formatDate($data['date']);
 

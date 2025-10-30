@@ -83,7 +83,7 @@ class ShowlogMethod extends MethodClass
                 );
             }
             if (!empty($data['changes'][$logid]['remark'])) {
-                $data['changes'][$logid]['remark'] = $this->var()->prep($data['changes'][$logid]['remark']);
+                $data['changes'][$logid]['remark'] = \xarVarPrep::forDisplay($data['changes'][$logid]['remark']);
             }
             // 2template $data['changes'][$logid]['date'] = $this->mls()->formatDate($data['changes'][$logid]['date']);
             // descending order of changes here

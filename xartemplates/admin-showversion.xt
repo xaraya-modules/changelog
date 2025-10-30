@@ -142,7 +142,7 @@
                         <xar:if condition="is_array($value) or is_object($value)">
                             <xar:set name="value">serialize($value)</xar:set>
                         </xar:if>
-                        <xar:set name="value">nl2br(xarVar::prepForDisplay($value))</xar:set>
+                        <xar:set name="value">nl2br(xarVarPrep::forDisplay($value))</xar:set>
                         #$value#
                     </td>
                 </tr>
