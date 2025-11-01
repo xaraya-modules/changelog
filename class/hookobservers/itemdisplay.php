@@ -82,7 +82,7 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
             $data['hostname'] = '';
         }
         if (!empty($data['remark'])) {
-            $data['remark'] = \xarVarPrep::forDisplay($data['remark']);
+            $data['remark'] = $this->prep()->text($data['remark']);
         }
         $data['link'] = $this->mod()->getURL(
             'admin',
