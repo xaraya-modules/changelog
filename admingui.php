@@ -12,10 +12,6 @@
 namespace Xaraya\Modules\ChangeLog;
 
 use Xaraya\Modules\AdminGuiClass;
-use sys;
-
-sys::import('xaraya.modules.admingui');
-sys::import('modules.changelog.adminapi');
 
 /**
  * Handle the changelog admin GUI

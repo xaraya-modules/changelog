@@ -21,9 +21,6 @@ use ixarEventSubject;
 use ixarHookSubject;
 use xarMod;
 use xarHooks;
-use sys;
-
-sys::import('xaraya.structures.hooks.observer');
 
 /**
  * create an entry for a module item - hook for ('item','create','GUI')
@@ -87,8 +84,8 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
         $fields = [];
         foreach ($extrainfo as $field => $value) {
             // skip some common uninteresting fields
-            if ($field == 'module' || $field == 'itemtype' || $field == 'itemid' ||
-                $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
+            if ($field == 'module' || $field == 'itemtype' || $field == 'itemid'
+                || $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
                 continue;
             }
             // skip fields we don't want here
@@ -103,8 +100,8 @@ class ItemCreateObserver extends HookObserver implements ixarHookObserver
             $withdd = '';
         }
         $withdd = explode(';', $withdd);
-        if (xarHooks::isAttached('dynamicdata', $modname, $itemtype) && !empty($withdd) &&
-            (in_array($modname, $withdd) || in_array("$modname.$itemtype", $withdd))) {
+        if (xarHooks::isAttached('dynamicdata', $modname, $itemtype) && !empty($withdd)
+            && (in_array($modname, $withdd) || in_array("$modname.$itemtype", $withdd))) {
             // Note: we need to make sure the DD hook is called before the changelog hook here
             $ddfields = $this->mod()->apiMethod(
                 'dynamicdata',

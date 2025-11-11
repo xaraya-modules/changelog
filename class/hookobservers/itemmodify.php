@@ -20,9 +20,6 @@ use ixarHookObserver;
 use ixarEventSubject;
 use ixarHookSubject;
 use BadParameterException;
-use sys;
-
-sys::import('xaraya.structures.hooks.observer');
 
 /**
  * modify an entry for a module item - hook for ('item','modify','GUI')

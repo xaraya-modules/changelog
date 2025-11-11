@@ -20,10 +20,7 @@ use xarPrivileges;
 use xarMasks;
 use xarModHooks;
 use xarHooks;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.installer');
 
 /**
  * Handle module installer functions
@@ -68,7 +65,6 @@ class Installer extends InstallerClass
         $changelogtable = $xartable['changelog'];
 
         //Load Table Maintenance API
-        sys::import('xaraya.tableddl');
         //xarTableDDL::init();
         $query = xarTableDDL::createTable(
             $xartable['changelog'],
@@ -439,7 +435,6 @@ class Installer extends InstallerClass
         $dbconn = $this->db()->getConn();
         $xartable = $this->db()->getTables();
 
-        sys::import('xaraya.tableddl');
         xarTableDDL::init();
 
         // Generate the SQL to drop the table using the API

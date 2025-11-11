@@ -12,9 +12,6 @@
 namespace Xaraya\Modules\ChangeLog;
 
 use Xaraya\Modules\AdminApiClass;
-use sys;
-
-sys::import('xaraya.modules.adminapi');
 
 /**
  * Handle the changelog admin API

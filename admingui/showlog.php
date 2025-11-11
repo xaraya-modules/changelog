@@ -11,14 +11,10 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
-
 use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * changelog admin showlog function
@@ -47,7 +43,8 @@ class ShowlogMethod extends MethodClass
         }
 
         $data = [];
-        $data['changes'] = $adminapi->getchanges(['modid' => $modid,
+        $data['changes'] = $adminapi->getchanges(
+            ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid]
         );

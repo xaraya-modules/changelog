@@ -11,14 +11,10 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
-
 use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\ChangeLog\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * changelog admin view function
@@ -55,7 +51,8 @@ class ViewMethod extends MethodClass
         $data = [];
         $data['editor'] = $editor;
 
-        $modlist = $userapi->getmodules(['editor' => $editor]
+        $modlist = $userapi->getmodules(
+            ['editor' => $editor]
         );
 
         if (empty($modid)) {
@@ -162,7 +159,8 @@ class ViewMethod extends MethodClass
             $data['itemsperpage'] = $numstats;
 
             $data['modid'] = $modid;
-            $getitems = $userapi->getitems(['modid' => $modid,
+            $getitems = $userapi->getitems(
+                ['modid' => $modid,
                     'itemtype' => $itemtype,
                     'editor' => $editor,
                     'numitems' => $numstats,

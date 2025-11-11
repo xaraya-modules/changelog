@@ -11,12 +11,8 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
-
 use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * changelog admin main function

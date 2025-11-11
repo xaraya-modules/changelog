@@ -11,12 +11,8 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminApi;
 
-
 use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * changelog adminapi getmenulinks function

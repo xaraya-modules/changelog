@@ -11,13 +11,9 @@
 
 namespace Xaraya\Modules\ChangeLog\UserApi;
 
-
 use Xaraya\Modules\ChangeLog\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use BadParameterException;
-
-sys::import('xaraya.modules.method');
 
 /**
  * changelog userapi getitems function

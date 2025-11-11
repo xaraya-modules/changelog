@@ -11,15 +11,11 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
-
 use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use BadParameterException;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * changelog admin showversion function
@@ -54,7 +50,8 @@ class ShowversionMethod extends MethodClass
             return;
         }
 
-        $data = $adminapi->getversion(['modid' => $modid,
+        $data = $adminapi->getversion(
+            ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'logid' => $logid]
@@ -153,8 +150,8 @@ class ShowversionMethod extends MethodClass
             ksort($fields);
             foreach ($fields as $field => $value) {
                 // skip some common uninteresting fields
-                if ($field == 'module' || $field == 'itemtype' || $field == 'itemid' ||
-                    $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
+                if ($field == 'module' || $field == 'itemtype' || $field == 'itemid'
+                    || $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
                     continue;
                 }
                 // skip fields we don't want here
@@ -250,7 +247,8 @@ class ShowversionMethod extends MethodClass
         }
 
         // get all changes
-        $changes = $adminapi->getchanges(['modid' => $modid,
+        $changes = $adminapi->getchanges(
+            ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid]
         );

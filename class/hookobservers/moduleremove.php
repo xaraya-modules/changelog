@@ -21,9 +21,6 @@ use ixarEventSubject;
 use ixarHookSubject;
 use BadParameterException;
 use xarMod;
-use sys;
-
-sys::import('xaraya.structures.hooks.observer');
 
 /**
  * delete all entries for a module - hook for ('module','remove','API')

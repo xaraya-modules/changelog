@@ -19,9 +19,6 @@ use HookObserver;
 use ixarHookObserver;
 use ixarEventSubject;
 use ixarHookSubject;
-use sys;
-
-sys::import('xaraya.structures.hooks.observer');
 
 /**
  * display changelog entry for a module item - hook for ('item','display','GUI')

@@ -11,16 +11,12 @@
 
 namespace Xaraya\Modules\ChangeLog\AdminGui;
 
-
 use Xaraya\Modules\ChangeLog\AdminGui;
 use Xaraya\Modules\ChangeLog\AdminApi;
 use Xaraya\Modules\ChangeLog\DiffLib;
 use Xaraya\Modules\MethodClass;
-use sys;
 use BadParameterException;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * changelog admin showdiff function
@@ -51,7 +47,8 @@ class ShowdiffMethod extends MethodClass
         }
 
         // get all changes
-        $changes = $adminapi->getchanges(['modid' => $modid,
+        $changes = $adminapi->getchanges(
+            ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid]
         );
@@ -198,7 +195,8 @@ class ShowdiffMethod extends MethodClass
             $fieldlist = explode(',', $getlist);
         }
 
-        $old = $adminapi->getversion(['modid' => $modid,
+        $old = $adminapi->getversion(
+            ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'logid' => $oldid]
@@ -214,8 +212,8 @@ class ShowdiffMethod extends MethodClass
             ksort($fields);
             foreach ($fields as $field => $value) {
                 // skip some common uninteresting fields
-                if ($field == 'module' || $field == 'itemtype' || $field == 'itemid' ||
-                    $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
+                if ($field == 'module' || $field == 'itemtype' || $field == 'itemid'
+                    || $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
                     continue;
                 }
                 // skip fields we don't want here
@@ -232,7 +230,8 @@ class ShowdiffMethod extends MethodClass
             $old['fields'] = [];
         }
 
-        $new = $adminapi->getversion(['modid' => $modid,
+        $new = $adminapi->getversion(
+            ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'logid' => $newid]
@@ -248,8 +247,8 @@ class ShowdiffMethod extends MethodClass
             ksort($fields);
             foreach ($fields as $field => $value) {
                 // skip some common uninteresting fields
-                if ($field == 'module' || $field == 'itemtype' || $field == 'itemid' ||
-                    $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
+                if ($field == 'module' || $field == 'itemtype' || $field == 'itemid'
+                    || $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
                     continue;
                 }
                 // skip fields we don't want here
