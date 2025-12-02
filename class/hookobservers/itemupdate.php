@@ -20,8 +20,6 @@ use ixarHookObserver;
 use ixarEventSubject;
 use ixarHookSubject;
 use BadParameterException;
-use xarMod;
-use xarHooks;
 
 /**
  * update entry for a module item - hook for ('item','update','API')
@@ -55,17 +53,17 @@ class ItemUpdateObserver extends HookObserver implements ixarHookObserver
             throw new BadParameterException($vars, $msg);
         }
 
-        xarMod::loadDbInfo('changelog', 'changelog');
+        $this->mod()->loadDbInfo('changelog', 'changelog');
         $dbconn = $this->db()->getConn();
         $xartable = $this->db()->getTables();
         $changelogtable = $xartable['changelog'];
 
         $editor = $this->user()->getId();
-        $forwarded = $this->ctl()->getServerVar('HTTP_X_FORWARDED_FOR');
+        $forwarded = $this->req()->getServerVar('HTTP_X_FORWARDED_FOR');
         if (!empty($forwarded)) {
             $hostname = preg_replace('/,.*/', '', $forwarded);
         } else {
-            $hostname = $this->ctl()->getServerVar('REMOTE_ADDR');
+            $hostname = $this->req()->getServerVar('REMOTE_ADDR');
         }
         $date = time();
         $status = 'updated';
@@ -105,7 +103,7 @@ class ItemUpdateObserver extends HookObserver implements ixarHookObserver
             $withdd = '';
         }
         $withdd = explode(';', $withdd);
-        if (xarHooks::isAttached('dynamicdata', $modname, $itemtype) && !empty($withdd)
+        if ($this->mod()->isHooked('dynamicdata', $modname, $itemtype) && !empty($withdd)
             && (in_array($modname, $withdd) || in_array("$modname.$itemtype", $withdd))) {
             // Note: we need to make sure the DD hook is called before the changelog hook here
             $ddfields = $this->mod()->apiMethod(

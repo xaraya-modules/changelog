@@ -21,7 +21,7 @@ class Tables
      * Return changelog table names to xaraya
      *
      * This function is called internally by the core whenever the module is
-     * loaded.  It is loaded by xarMod::loadDbInfo().
+     * loaded.  It is loaded by xar::mod()->loadDbInfo().
      *
      * @access private
      * @return array

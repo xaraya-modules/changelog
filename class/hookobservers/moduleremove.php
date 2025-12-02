@@ -20,7 +20,6 @@ use ixarHookObserver;
 use ixarEventSubject;
 use ixarHookSubject;
 use BadParameterException;
-use xarMod;
 
 /**
  * delete all entries for a module - hook for ('module','remove','API')
@@ -64,7 +63,7 @@ class ModuleRemoveObserver extends HookObserver implements ixarHookObserver
         }
 
         // Get database setup
-        xarMod::loadDbInfo('changelog', 'changelog');
+        $this->mod()->loadDbInfo('changelog', 'changelog');
         $dbconn = $this->db()->getConn();
         $xartable = $this->db()->getTables();
 

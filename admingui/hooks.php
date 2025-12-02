@@ -25,7 +25,7 @@ class HooksMethod extends MethodClass
     /**
      * Hooks shows the configuration of hooks for other modules
      * @author the Changelog module development team
-     * @return array|void xarTpl::module with $data containing template data
+     * @return array|void $data containing template data
      * @since 4 March 2006
      * @see AdminGui::hooks()
      */

@@ -14,7 +14,7 @@ namespace Xaraya\Modules\ChangeLog;
 use Xaraya\Modules\ModuleClass;
 
 /**
- * Get changelog module classes via xarMod::getModule()
+ * Get changelog module classes via xar::mod()->getModule()
  */
 class Module extends ModuleClass
 {

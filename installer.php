@@ -15,7 +15,6 @@ namespace Xaraya\Modules\ChangeLog;
 
 use Xaraya\Modules\InstallerClass;
 use xarTableDDL;
-use xarMod;
 use xarPrivileges;
 use xarMasks;
 use xarModHooks;
@@ -156,7 +155,7 @@ class Installer extends InstallerClass
         // @todo create table schema and use standard install
         //$module = 'changelog';
         //$objects = ['changelog'];
-        //if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
+        //if (!$this->mod()->apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
         //    return;
         //}
 
@@ -463,6 +462,6 @@ class Installer extends InstallerClass
         // Deletion successful
         return true;
         //$module = 'changelog';
-        //return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
+        //return $this->mod()->apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
     }
 }
