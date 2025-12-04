@@ -46,7 +46,7 @@
     </fieldset>
     <div class="xar-form-input-wrapper-after">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="submit" value="#xarML('Update Change Log Configuration')#" />
+        <input type="submit" value="#$xar->ml('Update Change Log Configuration')#" />
     </div>
 </form>
 

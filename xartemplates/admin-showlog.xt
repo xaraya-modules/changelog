@@ -42,8 +42,8 @@
                 <td class="xar-norm">
                     <xar:ml>
                         <xar:mlstring>#(1) #(2)</xar:mlstring>
-                        <xar:mlvar>#xarLocale::getFormattedDate('medium',$change['date'])#</xar:mlvar>
-                        <xar:mlvar>#xarLocale::getFormattedTime('medium',$change['date'])#</xar:mlvar>
+                        <xar:mlvar>#$xar->mls()->getFormattedDate('medium',$change['date'])#</xar:mlvar>
+                        <xar:mlvar>#$xar->mls()->getFormattedTime('medium',$change['date'])#</xar:mlvar>
                     </xar:ml>
                 </td>
                 <td class="xar-norm">#$change['remark']#</td>
@@ -73,7 +73,7 @@
         <input type="hidden" name="modid" value="#$modid#" />
         <input type="hidden" name="itemtype" value="#$itemtype#" />
         <input type="hidden" name="itemid" value="#$itemid#" />
-        <input type="submit" value="#xarML('Diff')#" />
+        <input type="submit" value="#$xar->ml('Diff')#" />
     </div>
     </form>
 </div>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-form-input-wrapper">
-        <label for="changelog" class="xar-form-label" title="#xarML('Select Enter changelog comment')#">
+        <label for="changelog" class="xar-form-label" title="#$xar->ml('Select Enter changelog comment')#">
             <xar:if condition="!empty($link)">
                  <a href="#$link#"><xar:mlstring>Change Log</xar:mlstring></a>
             <xar:else />

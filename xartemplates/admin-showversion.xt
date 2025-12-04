@@ -58,8 +58,8 @@
                     <td class="xar-norm">
                         <xar:ml>
                             <xar:mlstring>#(1) #(2)</xar:mlstring>
-                            <xar:mlvar>#xarLocale::getFormattedDate('medium',$date)#</xar:mlvar>
-                            <xar:mlvar>#xarLocale::getFormattedTime('medium',$date)#</xar:mlvar>
+                            <xar:mlvar>#$xar->mls()->getFormattedDate('medium',$date)#</xar:mlvar>
+                            <xar:mlvar>#$xar->mls()->getFormattedTime('medium',$date)#</xar:mlvar>
                         </xar:ml>
                     </td>
                     <td class="xar-norm">#$remark#</td>
@@ -103,7 +103,7 @@
                 <xar:comment>
                     Hint: we retrieve the DD object and then pass the $fields to checkinput(), to update the object values
                 </xar:comment>
-                <xar:set name="ddobject">xarMod::apiFunc('dynamicdata','user','getobject',array('module_id' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid))</xar:set>
+                <xar:set name="ddobject">$xar->mod()->apiFunc('dynamicdata','user','getobject',array('module_id' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid))</xar:set>
                 <xar:set name="dummy">$ddobject->getItem()</xar:set>
                 <xar:set name="curfields">$ddobject->getFieldValues([], 1)</xar:set>
                 <xar:set name="curfields">array_merge($curfields, $fields)</xar:set>
@@ -142,7 +142,7 @@
                         <xar:if condition="is_array($value) or is_object($value)">
                             <xar:set name="value">serialize($value)</xar:set>
                         </xar:if>
-                        <xar:set name="value">nl2br(xarVarPrep::text($value))</xar:set>
+                        <xar:set name="value">nl2br($xar->prep()->text($value))</xar:set>
                         #$value#
                     </td>
                 </tr>
