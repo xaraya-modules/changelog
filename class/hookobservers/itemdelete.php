@@ -37,7 +37,7 @@ class ItemDeleteObserver extends HookObserver implements ixarHookObserver
      */
     public function notify(ixarEventSubject $subject)
     {
-        $this->setContext($subject->getContext());
+        $xar = $this->getServicesClass($subject->getServicesClass());
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
 
@@ -52,17 +52,17 @@ class ItemDeleteObserver extends HookObserver implements ixarHookObserver
             throw new BadParameterException($vars, $msg);
         }
 
-        $this->mod()->loadDbInfo('changelog', 'changelog');
-        $dbconn = $this->db()->getConn();
-        $xartable = $this->db()->getTables();
+        $xar->mod()->loadDbInfo('changelog', 'changelog');
+        $dbconn = $xar->db()->getConn();
+        $xartable = $xar->db()->getTables();
         $changelogtable = $xartable['changelog'];
 
-        $editor = $this->user()->getId();
-        $forwarded = $this->req()->getServerVar('HTTP_X_FORWARDED_FOR');
+        $editor = $xar->user()->getId();
+        $forwarded = $xar->req()->getServerVar('HTTP_X_FORWARDED_FOR');
         if (!empty($forwarded)) {
             $hostname = preg_replace('/,.*/', '', $forwarded);
         } else {
-            $hostname = $this->req()->getServerVar('REMOTE_ADDR');
+            $hostname = $xar->req()->getServerVar('REMOTE_ADDR');
         }
         $date = time();
         $status = 'deleted';
@@ -70,7 +70,7 @@ class ItemDeleteObserver extends HookObserver implements ixarHookObserver
             if (isset($extrainfo['changelog_remark']) && is_string($extrainfo['changelog_remark'])) {
                 $remark = $extrainfo['changelog_remark'];
             } else {
-                $this->var()->find('changelog_remark', $remark, 'str:1:');
+                $xar->var()->find('changelog_remark', $remark, 'str:1:');
                 if (empty($remark)){
                     $remark = '';
                 }

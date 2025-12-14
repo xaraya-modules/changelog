@@ -37,7 +37,7 @@ class ModuleRemoveObserver extends HookObserver implements ixarHookObserver
      */
     public function notify(ixarEventSubject $subject)
     {
-        $this->setContext($subject->getContext());
+        $xar = $this->getServicesClass($subject->getServicesClass());
         // for module remove, we need the module name, we get that from the objectid
         // get args from subject (array containing objectid, extrainfo)
         $args = $subject->getArgs();
@@ -55,7 +55,7 @@ class ModuleRemoveObserver extends HookObserver implements ixarHookObserver
             throw new BadParameterException($vars, $msg);
         }
 
-        $modid = $this->mod()->getRegID($objectid);
+        $modid = $xar->mod()->getRegID($objectid);
         if (empty($modid)) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
             $vars = ['module id', 'admin', 'removehook', 'changelog'];
@@ -63,9 +63,9 @@ class ModuleRemoveObserver extends HookObserver implements ixarHookObserver
         }
 
         // Get database setup
-        $this->mod()->loadDbInfo('changelog', 'changelog');
-        $dbconn = $this->db()->getConn();
-        $xartable = $this->db()->getTables();
+        $xar->mod()->loadDbInfo('changelog', 'changelog');
+        $dbconn = $xar->db()->getConn();
+        $xartable = $xar->db()->getTables();
 
         $changelog = $xartable['changelog'];
 

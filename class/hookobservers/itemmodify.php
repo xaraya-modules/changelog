@@ -37,7 +37,7 @@ class ItemModifyObserver extends HookObserver implements ixarHookObserver
      */
     public function notify(ixarEventSubject $subject)
     {
-        $this->setContext($subject->getContext());
+        $xar = $this->getServicesClass($subject->getServicesClass());
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
 
@@ -55,14 +55,15 @@ class ItemModifyObserver extends HookObserver implements ixarHookObserver
         if (!empty($extrainfo['changelog_remark'])) {
             $remark = $extrainfo['changelog_remark'];
         } else {
-            $this->var()->find('changelog_remark', $remark, 'str:1:');
+            $xar->var()->find('changelog_remark', $remark, 'str:1:');
             if (empty($remark)) {
                 $remark = '';
             }
         }
 
-        if ($this->sec()->check('ReadChangeLog', 0, 'Item', "$modid:$itemtype:$itemid")) {
-            $link = $this->mod()->getURL(
+        if ($xar->sec()->check('ReadChangeLog', 0, 'Item', "$modid:$itemtype:$itemid")) {
+            $link = $xar->ctl()->getModuleURL(
+                'changelog',
                 'admin',
                 'showlog',
                 ['modid' => $modid,

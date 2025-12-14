@@ -38,7 +38,7 @@ class ItemUpdateObserver extends HookObserver implements ixarHookObserver
      */
     public function notify(ixarEventSubject $subject)
     {
-        $this->setContext($subject->getContext());
+        $xar = $this->getServicesClass($subject->getServicesClass());
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
 
@@ -53,33 +53,33 @@ class ItemUpdateObserver extends HookObserver implements ixarHookObserver
             throw new BadParameterException($vars, $msg);
         }
 
-        $this->mod()->loadDbInfo('changelog', 'changelog');
-        $dbconn = $this->db()->getConn();
-        $xartable = $this->db()->getTables();
+        $xar->mod()->loadDbInfo('changelog', 'changelog');
+        $dbconn = $xar->db()->getConn();
+        $xartable = $xar->db()->getTables();
         $changelogtable = $xartable['changelog'];
 
-        $editor = $this->user()->getId();
-        $forwarded = $this->req()->getServerVar('HTTP_X_FORWARDED_FOR');
+        $editor = $xar->user()->getId();
+        $forwarded = $xar->req()->getServerVar('HTTP_X_FORWARDED_FOR');
         if (!empty($forwarded)) {
             $hostname = preg_replace('/,.*/', '', $forwarded);
         } else {
-            $hostname = $this->req()->getServerVar('REMOTE_ADDR');
+            $hostname = $xar->req()->getServerVar('REMOTE_ADDR');
         }
         $date = time();
         $status = 'updated';
         if (isset($extrainfo['changelog_remark']) && is_string($extrainfo['changelog_remark'])) {
             $remark = $extrainfo['changelog_remark'];
         } else {
-            $this->var()->find('changelog_remark', $remark, 'str:1:');
+            $xar->var()->find('changelog_remark', $remark, 'str:1:');
             if (empty($remark)) {
                 $remark = '';
             }
         }
         if (!empty($itemtype)) {
-            $getlist = $this->mod()->getVar($modname . '.' . $itemtype);
+            $getlist = $xar->mod('changelog')->getVar($modname . '.' . $itemtype);
         }
         if (!isset($getlist)) {
-            $getlist = $this->mod()->getVar($modname);
+            $getlist = $xar->mod('changelog')->getVar($modname);
         }
         if (!empty($getlist)) {
             $fieldlist = explode(',', $getlist);
@@ -98,15 +98,15 @@ class ItemUpdateObserver extends HookObserver implements ixarHookObserver
             $fields[$field] = $value;
         }
         // Check if we need to include any DD fields
-        $withdd = $this->mod()->getVar('withdd');
+        $withdd = $xar->mod('changelog')->getVar('withdd');
         if (empty($withdd)) {
             $withdd = '';
         }
         $withdd = explode(';', $withdd);
-        if ($this->mod()->isHooked('dynamicdata', $modname, $itemtype) && !empty($withdd)
+        if ($xar->mod()->isHooked('dynamicdata', $modname, $itemtype) && !empty($withdd)
             && (in_array($modname, $withdd) || in_array("$modname.$itemtype", $withdd))) {
             // Note: we need to make sure the DD hook is called before the changelog hook here
-            $ddfields = $this->mod()->apiMethod(
+            $ddfields = $xar->mod()->apiMethod(
                 'dynamicdata',
                 'userapi',
                 'getitem',

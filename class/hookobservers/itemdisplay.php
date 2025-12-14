@@ -37,7 +37,7 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
      */
     public function notify(ixarEventSubject $subject)
     {
-        $this->setContext($subject->getContext());
+        $xar = $this->getServicesClass($subject->getServicesClass());
         // get extrainfo from subject (array containing module, module_id, itemtype, itemid)
         $extrainfo = $subject->getExtrainfo();
 
@@ -47,7 +47,7 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
         $itemid = $extrainfo['itemid'];
         $modid = $extrainfo['module_id'];
 
-        $changes = $this->mod()->apiMethod(
+        $changes = $xar->mod()->apiMethod(
             'changelog',
             'adminapi',
             'getchanges',
@@ -63,13 +63,13 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
 
         $data = array_pop($changes);
 
-        if ($this->sec()->checkAccess('AdminChangeLog', 0)) {
+        if ($xar->sec()->checkAccess('AdminChangeLog', 0)) {
             $data['showhost'] = 1;
         } else {
             $data['showhost'] = 0;
         }
 
-        $data['profile'] = $this->ctl()->getModuleURL(
+        $data['profile'] = $xar->ctl()->getModuleURL(
             'roles',
             'user',
             'display',
@@ -79,9 +79,10 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
             $data['hostname'] = '';
         }
         if (!empty($data['remark'])) {
-            $data['remark'] = $this->prep()->text($data['remark']);
+            $data['remark'] = $xar->prep()->text($data['remark']);
         }
-        $data['link'] = $this->mod()->getURL(
+        $data['link'] = $xar->ctl()->getModuleURL(
+            'changelog',
             'admin',
             'showlog',
             ['modid' => $modid,
