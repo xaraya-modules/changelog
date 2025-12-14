@@ -91,7 +91,7 @@ class ItemDisplayObserver extends HookObserver implements ixarHookObserver
         $data['context'] = $this->getContext();
 
         // TODO: use custom template per module + itemtype ?
-        return $this->mod()->template(
+        return $this->render(
             'displayhook',
             $data
         );

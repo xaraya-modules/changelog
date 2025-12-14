@@ -245,6 +245,11 @@ class ShowversionMethod extends MethodClass
             ));
             return true;
         }
+        // get DD object name
+        if ($modinfo['name'] == 'dynamicdata') {
+            $ddinfo = $this->data()->getObjectID(['moduleid' => $modid, 'itemtype' => $itemtype]);
+            $data['ddname'] = $ddinfo['name'] ?? '';
+        }
 
         // get all changes
         $changes = $adminapi->getchanges(

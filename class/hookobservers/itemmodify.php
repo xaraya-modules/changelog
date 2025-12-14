@@ -73,7 +73,7 @@ class ItemModifyObserver extends HookObserver implements ixarHookObserver
             $link = '';
         }
 
-        return $this->mod()->template(
+        return $this->render(
             'modifyhook',
             ['remark' => $remark,
                 'context' => $this->getContext(),

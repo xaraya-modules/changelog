@@ -96,7 +96,7 @@
                 {#  
                     Hint: we retrieve the DD object and then pass the $fields to checkinput(), to update the object values
                  #}
-                {% set ddobject = xar_apifunc('dynamicdata','user','getobject',{'module_id': modid, 'itemtype': itemtype, 'itemid': itemid}) %}
+                {% set ddobject = xar_data_object({'name': ddname, 'itemid': itemid}) %}
                 {% set dummy = ddobject.getItem() %}
                 {% set curfields = ddobject.getFieldValues([], 1) %}
                 {% set curfields = curfields|merge(fields) %}
